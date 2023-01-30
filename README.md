@@ -1,20 +1,20 @@
 # ChoreAssign
 
-## An application for assigning and tracking household chores
+## An application for managing household chores
 
-This application will help members of a household divide and assign chores on a monthly basis. Chores may need to be
-completed on different intervals, for example:
+This application will help members of a household divide, assign and remember recurring chores. Chores 
+may need to be completed on different intervals, for example:
 
 - feeding a pet (daily)
 - taking out the garbage (weekly)
 - cleaning the fridge (monthly)
 
-This application will allow users to define chores with intervals on which they should be completed and time required.
-Users can then add household members and can assign chores to them. Users will be able to view their 
-household members and the chores assigned to each. This will help users remember and track what chores they and others 
-in their household are responsible for. 
+This application will allow users to define chores with intervals on which they should be completed and the time to
+complete the chore on the specified interval. Users can then add household members and manage chores assigned to each 
+household member. Users will also be able to view their household members and the chores assigned to each. 
+This will help users remember and track what chores they and others in their household are responsible for. 
 
-This application could be useful to anyone who shares a home with roommates, their significant
+This application could be useful to anyone who shares a living space with roommates, their significant
 other, their family, or anyone else. My motivation for this project comes from my own household, where my partner and I
 often discuss how to divide chores and how often they will be done.
 
