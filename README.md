@@ -21,11 +21,11 @@ often discuss how to divide chores and how often they will be done.
 ## User Stories
 
 - As a user, I want to be able to create a new chore with a name, description, frequency (daily, weekly, or monthly), 
-  and time commitment
-- As a user, I want to view the existing list of chores
-- As a user, I want to be able to edit an existing chore
-- As a user, I want to be able to delete a chore
-- As a user, I want to be able to add household members with a name and list of assigned chores
+  and time commitment and add it to a list of chores
+- As a user, I want to view the existing list of chores to be assigned
+- As a user, I want to be able to edit an existing chore in the list of chores to be assigned
+- As a user, I want to be able to delete a chore from the list of chores to be assigned
+- As a user, I want to be able to create a household member with a name and list of assigned chores
 - As a user, I want to view the existing list of household members
 - As a user, I want to be able to remove household members
 - As a user, I want to be able to assign chores to individual household members

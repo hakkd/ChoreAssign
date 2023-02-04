@@ -23,6 +23,13 @@ public class Person {
         this.chores.add(chore);
     }
 
+    // REQUIRES: chores contains at least one chore
+    // MODIFIES: this
+    // EFFECTS: remove chore at specified index
+    public void deleteChore(Integer index) {
+        this.chores.remove(index);
+    }
+
     // EFFECTS: returns sum of time required for all chores assigned to person for a week.
     // Assume 4 weeks in a month.
     public Double getTotalTimeWeekly() {

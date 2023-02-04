@@ -9,6 +9,7 @@ public class Chore {
     private String description; // description of chore
     private Double time; // time taken to complete in hours
     private Interval interval;
+    private boolean isAssigned; // True if has been assigned, else false
 
     // EFFECTS: constructs a chore
     public void chore(String name, String description, Double time,  Interval interval) {
@@ -16,6 +17,7 @@ public class Chore {
         this.description = description;
         this.time = time;
         this.interval = interval;
+        this.isAssigned = false;
     }
 
     // MODIFIES: this
@@ -42,6 +44,18 @@ public class Chore {
         this.interval = interval;
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes assignment status of chore to true (assigned)
+    public void assign() {
+        this.isAssigned = true;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes assignment status of chore to false (unassigned)
+    public void unAssign() {
+        this.isAssigned = false;
+    }
+
     public String getName() {
         return name;
     }
@@ -56,5 +70,9 @@ public class Chore {
 
     public Interval getInterval() {
         return this.interval;
+    }
+
+    public Boolean getIsAssigned() {
+        return this.isAssigned;
     }
 }
