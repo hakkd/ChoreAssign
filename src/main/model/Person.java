@@ -23,34 +23,39 @@ public class Person {
         this.chores.add(chore);
     }
 
-    // REQUIRES: Interval is Interval.MONTHLY or Interval.WEEKLY
-    // EFFECTS: returns sum of time required for all chores assigned to person for a week or month.
+    // EFFECTS: returns sum of time required for all chores assigned to person for a week.
     // Assume 4 weeks in a month.
-    // !!! make two methods for weekly and monthly
-    public Double getTotalTime(Interval interval) {
-        ArrayList<Chore> chores = getChores();
+    public Double getTotalTimeWeekly() {
+        ArrayList<Chore> chores = this.getChores();
 
         Double total = 0.0;
         for (Chore c: chores) {
             Double t = c.getTime();
             if (c.getInterval() == Interval.DAILY) {
-                if (interval == Interval.WEEKLY) {
-                    total += 7 * t;
-                } else {
-                    total += 7 * 4 * t;
-                }
+                total += 7 * t;
             } else if (c.getInterval() == Interval.WEEKLY) {
-                if (interval == Interval.WEEKLY) {
-                    total += t;
-                } else {
-                    total += 4 * t;
-                }
+                total += t;
             } else if (c.getInterval() == Interval.MONTHLY) {
-                if (interval == Interval.WEEKLY) {
-                    total += t / 4;
-                } else {
-                    total += t;
-                }
+                total += t / 4;
+            }
+        }
+        return total;
+    }
+
+    // EFFECTS: returns sum of time required for all chores assigned to person for a week.
+    // Assume 4 weeks in a month.
+    public Double getTotalTimeMonthly() {
+        ArrayList<Chore> chores = this.getChores();
+
+        Double total = 0.0;
+        for (Chore c: chores) {
+            Double t = c.getTime();
+            if (c.getInterval() == Interval.DAILY) {
+                total += 7 * 4 * t;
+            } else if (c.getInterval() == Interval.WEEKLY) {
+                total += 4 * t;
+            } else if (c.getInterval() == Interval.MONTHLY) {
+                total += t;
             }
         }
         return total;
