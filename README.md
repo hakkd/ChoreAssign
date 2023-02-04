@@ -20,7 +20,7 @@ often discuss how to divide chores and how often they will be done.
 
 ## User Stories
 
-- As a user, I want to be able to create a new chore with a name, frequency (daily, weekly, or monthly), 
+- As a user, I want to be able to create a new chore with a name, description, frequency (daily, weekly, or monthly), 
   and time commitment
 - As a user, I want to view the existing list of chores
 - As a user, I want to be able to edit an existing chore
