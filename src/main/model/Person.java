@@ -17,17 +17,32 @@ public class Person {
         this.time = 0.0;
     }
 
+    // REQUIRES: chore has not already been assigned to person
     // MODIFIES: this
-    // EFFECTS: add chore to person
-    public void assignChore(Chore chore) {
-        this.chores.add(chore);
+    // EFFECTS: add chore to person if not already assigned. Add chore time to total assigned time.
+    public boolean assignChore(Chore chore) {
+        boolean result = true;
+        if (!this.getChores().contains(chore)) {
+            this.chores.add(chore);
+            this.time += chore.getTime();
+        } else {
+            result = false;
+        }
+        return result;
     }
 
-    // REQUIRES: chores contains at least one chore
+    // REQUIRES: chores contains chore with specified id
     // MODIFIES: this
-    // EFFECTS: remove chore at specified index
-    public void deleteChore(Integer index) {
-        this.chores.remove(index);
+    // EFFECTS: remove chore from list of chores at specified index
+    public void deleteChore(Chore chore) {
+        double t = 0;
+        for (Chore c: this.chores) {
+            if (c == chore) {
+                t = c.getTime();
+            }
+        }
+        this.time -= t;
+        this.chores.remove(chore);
     }
 
     // EFFECTS: returns sum of time required for all chores assigned to person for a week.
@@ -74,5 +89,9 @@ public class Person {
 
     public ArrayList<Chore> getChores() {
         return chores;
+    }
+
+    public double getTime() {
+        return time;
     }
 }

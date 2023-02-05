@@ -23,15 +23,16 @@ public class Chore {
     // MODIFIES: this
     // EFFECTS: changes assignment status of chore to true (assigned)
     public void assign(Person person) {
-        this.isAssigned = true;
-        person.assignChore(this);
+        if (person.assignChore(this) != false) {
+            this.isAssigned = true;
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: changes assignment status of chore to false (unassigned)
     public void unassign(Person person) {
         this.isAssigned = false;
-        person.getChores().remove(this);
+        person.deleteChore(this);
     }
 
     public String getName() {
