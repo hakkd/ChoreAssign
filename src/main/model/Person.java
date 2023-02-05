@@ -8,10 +8,10 @@ public class Person {
     // fields
     private String name; // name
     private ArrayList<Chore> chores; // list of assigned chores
-    private Double time; // time taken by assigned chores
+    private double time; // time taken by assigned chores
 
     // EFFECTS: constructs a new person
-    public void person(String name) {
+    public Person(String name) {
         this.name = name;
         this.chores = new ArrayList();
         this.time = 0.0;
