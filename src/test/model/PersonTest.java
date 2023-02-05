@@ -11,6 +11,7 @@ public class PersonTest {
 
     Chore chore1;
     Chore chore2;
+    Chore chore3;
 
     @BeforeEach
     public void setup() {
@@ -19,6 +20,8 @@ public class PersonTest {
 
         chore1 = new Chore("Dishes", "wash dishes", 0.5, Interval.DAILY);
         chore2 = new Chore("Laundry", "wash laundry", 1, Interval.WEEKLY);
+        chore3 = new Chore("Clean Fridge", "wipe down fridge and throw out old food",
+                1, Interval.MONTHLY);
     }
 
     @Test
@@ -49,4 +52,35 @@ public class PersonTest {
         assertEquals(1, person1.getChores().size());
     }
 
+    @Test
+    public void testGetTotalTimeWeekly() {
+        person1.assignChore(chore1);
+        assertEquals(chore1.getTime() * 7, person1.getTotalTimeWeekly());
+
+        person1.assignChore(chore2);
+        assertEquals(chore1.getTime() * 7 + chore2.getTime(), person1.getTotalTimeWeekly());
+
+        person1.assignChore(chore3);
+        assertEquals(chore1.getTime() * 7 + chore2.getTime() + chore3.getTime() / 4,
+                person1.getTotalTimeWeekly());
+
+        person1.deleteChore(chore2);
+        assertEquals(chore1.getTime() * 7 + chore3.getTime() / 4, person1.getTotalTimeWeekly());
+    }
+
+    @Test
+    public void testGetTotalTimeMonthly() {
+        person1.assignChore(chore1);
+        assertEquals(chore1.getTime() * 7 * 4, person1.getTotalTimeMonthly());
+
+        person1.assignChore(chore2);
+        assertEquals(chore1.getTime() * 7 * 4 + chore2.getTime() * 4, person1.getTotalTimeMonthly());
+
+        person1.assignChore(chore3);
+        assertEquals(chore1.getTime() * 7 * 4 + chore2.getTime() * 4 + chore3.getTime(),
+                person1.getTotalTimeMonthly());
+
+        person1.deleteChore(chore2);
+        assertEquals(chore1.getTime() * 7 * 4 + chore3.getTime(), person1.getTotalTimeMonthly());
+    }
 }
