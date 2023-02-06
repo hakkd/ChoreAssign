@@ -67,20 +67,7 @@ public class Person {
     // EFFECTS: returns sum of time required for all chores assigned to person for a week.
     // Assume 4 weeks in a month.
     public Double getTotalTimeMonthly() {
-        ArrayList<Chore> chores = this.getChores();
-
-        Double total = 0.0;
-        for (Chore c: chores) {
-            Double t = c.getTime();
-            if (c.getInterval() == Interval.DAILY) {
-                total += 7 * 4 * t;
-            } else if (c.getInterval() == Interval.WEEKLY) {
-                total += 4 * t;
-            } else if (c.getInterval() == Interval.MONTHLY) {
-                total += t;
-            }
-        }
-        return total;
+        return this.getTotalTimeWeekly() * 4;
     }
 
     public String getName() {
