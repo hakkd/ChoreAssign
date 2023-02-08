@@ -5,6 +5,8 @@ package model;
 
 public class Chore {
     // fields
+    private static int nextId = 0;
+    private int id;
     private String name; // name of chore
     private String description; // description of chore
     private double time; // time taken to complete in hours
@@ -13,6 +15,7 @@ public class Chore {
 
     // EFFECTS: constructs a chore
     public Chore(String name, String description, double time,  Interval interval) {
+        this.id = nextId++;
         this.name = name;
         this.description = description;
         this.time = time;
@@ -23,7 +26,7 @@ public class Chore {
     // MODIFIES: this
     // EFFECTS: changes assignment status of chore to true (assigned)
     public void assign(Person person) {
-        if (person.assignChore(this) != false) {
+        if (person.assignChore(this)) {
             this.isAssigned = true;
         }
     }
@@ -33,6 +36,10 @@ public class Chore {
     public void unassign(Person person) {
         this.isAssigned = false;
         person.deleteChore(this);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
