@@ -13,7 +13,7 @@ class ChoreTest {
     Person testPerson;
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws IllegalNameException {
         chore1 = new Chore("Dishes", "wash dishes", 0.5, Interval.DAILY);
         chore2 = new Chore("Laundry", "wash laundry", 1, Interval.WEEKLY);
         chore3 = new Chore("Clean Fridge", "wipe down fridge and throw out old food",

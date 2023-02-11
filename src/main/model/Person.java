@@ -10,6 +10,7 @@ public class Person {
     private ArrayList<Chore> chores; // list of assigned chores
     private double time; // time taken by assigned chores
 
+    // REQUIRES: name length is > 0
     // EFFECTS: constructs a new person
     public Person(String name) {
         this.name = name;
@@ -17,7 +18,7 @@ public class Person {
         this.time = 0.0;
     }
 
-    // REQUIRES: chore has not already been assigned to person
+    // REQUIRES: chore has not already been assigned to this person
     // MODIFIES: this
     // EFFECTS: add chore to person if not already assigned. Add chore time to total assigned time.
     public boolean assignChore(Chore chore) {

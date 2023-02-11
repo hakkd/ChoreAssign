@@ -13,7 +13,9 @@ public class Chore {
     private Interval interval;
     private boolean isAssigned; // True if has been assigned, else false
 
+    // REQUIRES: name has length > 0, time is > 0
     // EFFECTS: constructs a chore
+    // TODO: add exception for requires
     public Chore(String name, String description, double time,  Interval interval) {
         this.id = nextId++;
         this.name = name;

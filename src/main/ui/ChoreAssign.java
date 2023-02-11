@@ -54,9 +54,9 @@ public class ChoreAssign {
         System.out.println("\nSelect from:");
         System.out.println("\tc -> create chore");
         System.out.println("\tv -> view chores");
-        System.out.println("\te -> assign a chore");
-        System.out.println("\th -> edit people");
-        System.out.println("\tm -> view people");
+        System.out.println("\ta -> assign a chore");
+        System.out.println("\te -> edit people");
+        System.out.println("\tp -> view people");
         System.out.println("\tq -> quit");
     }
 
@@ -67,11 +67,11 @@ public class ChoreAssign {
             createChore();
         } else if (command.equals("v")) {
             viewChores(chores);
-        } else if (command.equals("e")) {
+        } else if (command.equals("a")) {
             assignChore();
-        } else if (command.equals("h")) {
+        } else if (command.equals("e")) {
             editPeople();
-        } else if (command.equals("m")) {
+        } else if (command.equals("p")) {
             viewPeople();
         } else {
             System.out.println("Selection not valid...");
@@ -100,9 +100,9 @@ public class ChoreAssign {
         String selection = "";  // force entry into loop
 
         while (!(selection.equals("d") || selection.equals("w") || selection.equals("m"))) {
-            System.out.println("d for daily");
-            System.out.println("w for weekly");
-            System.out.println("m for monthly");
+            System.out.println("\td for daily");
+            System.out.println("\tw for weekly");
+            System.out.println("\tm for monthly");
             selection = input.next();
             selection = selection.toLowerCase();
         }
@@ -121,9 +121,10 @@ public class ChoreAssign {
         if (chores.isEmpty()) {
             System.out.println("There are no chores");
         } else {
-            System.out.println("id " + "name");
+            System.out.println("id " + "name " + "time (h) " + "interval " + "assigned?");
             for (Chore c : chores) {
-                System.out.println(c.getId() + " " + c.getName());
+                System.out.println("\t" + c.getId() + " " + c.getName() + " " + c.getTime() + " " + c.getInterval()
+                        + " " + c.getIsAssigned());
             }
         }
     }
@@ -131,7 +132,28 @@ public class ChoreAssign {
     // MODIFIES: this
     // EFFECTS: allows user to add a chore to a person's list of chores
     private void assignChore() {
+        System.out.println("Here are the available chores:");
         viewChores(chores);
+        if (!chores.isEmpty()) {
+            System.out.println("Enter the ID number of the chore you want to assign");
+            int id = input.nextInt();
+            Chore chore = null;
+            for (Chore c : chores) {
+                if (c.getId() == id) {
+                    chore = c;
+                }
+            }
+
+            System.out.println("Enter the name of the person to assign the chore to");
+            String name = input.next();
+            Person person = getPerson(name);
+
+
+            if (chore != null && person != null) {
+                chore.assign(person);
+                System.out.println(chore.getName() + " was assigned to " + person.getName());
+            }
+        }
     }
 
     // MODIFIES: this
@@ -182,6 +204,7 @@ public class ChoreAssign {
         String name = input.next();
         Person person = new Person(name);
         people.add(person);
+        System.out.println("Created new person named " + name);
     }
 
     // MODIFIES: this
@@ -189,33 +212,49 @@ public class ChoreAssign {
     private void deletePerson() {
         System.out.println("Here are the people:");
         viewPeople();
-        System.out.println("Enter the name of the person to delete");
-        String name = input.next();
-        System.out.println(name + " will be deleted");
-        System.out.println("Are you sure (y/n)");
-        String response = input.next();
-        if (response.equals("y")) {
-            for (Person p: people) {
-                if (p.getName().equals(name)) {
-                    people.remove(p);
-                    System.out.println(name + " was deleted.");
+        if (!people.isEmpty()) {
+            System.out.println("Enter the name of the person to delete");
+            String name = input.next();
+            System.out.println(name + " will be deleted");
+            System.out.println("Are you sure (y/n)");
+            String response = input.next();
+
+            Person person = null;
+            if (response.equals("y")) {
+                person = getPerson(name);
+            }
+            // TODO: make this not crash
+            if (person != null) {
+                for (Chore c: person.getChores()) {
+                    c.unassign(person);
                 }
-                System.out.println("There is no person with that name");
+                people.remove(person);
+                System.out.println(name + " was deleted.");
             }
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: lets user add/remove chores for specified person
+    // EFFECTS: lets user remove chores for specified person
     private void editAssignments() {
         System.out.println("Here are the people:");
         viewPeople();
-        System.out.println("Enter the name of a person to view chores");
-        String name = input.next();
+        if (!people.isEmpty()) {
+            System.out.println("Enter the name of a person to view chores");
+            String name = input.next();
+            Person person = getPerson(name);
+            if (person != null) {
+                viewChores(person.getChores());
 
-        for (Person p : people) {
-            if (p.getName().equals(name)) {
-                viewChores(p.getChores());
+                System.out.println("Enter a chore ID to unassign it from " + person.getName());
+                int id = input.nextInt();
+
+                Chore chore = getChore(id, person);
+
+                if (chore != null && person != null) {
+                    chore.unassign(person);
+                    System.out.println(chore.getName() + " was unassigned");
+                }
             }
         }
     }
@@ -226,8 +265,32 @@ public class ChoreAssign {
             System.out.println("There are no people");
         } else {
             for (Person p: people) {
-                System.out.println(p.getName());
+                System.out.println(p.getName() + " has " + p.getTotalTimeWeekly() + " hours of chores per week");
             }
         }
+    }
+
+    // EFFECTS: returns chore with given ID from person's chores or null if no chores are assigned
+    private Chore getChore(int id, Person p) {
+        Chore chore = null;
+        for (Chore c : p.getChores()) {
+            if (c.getId() == id) {
+                chore = c;
+            }
+        }
+        return chore;
+    }
+
+    // EFFECTS: returns person with given name or null if person doesn't exist
+    private Person getPerson(String name) {
+        Person person = null;
+        for (Person p : people) {
+            if (p.getName().equals(name)) {
+                person = p;
+                break;
+            }
+            System.out.println("There is no person with that name");
+        }
+        return person;
     }
 }
