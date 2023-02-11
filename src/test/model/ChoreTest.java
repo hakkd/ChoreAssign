@@ -28,6 +28,9 @@ class ChoreTest {
         assertEquals("wash dishes", chore1.getDescription());
         assertEquals(0.5, chore1.getTime());
         assertEquals(Interval.DAILY, chore1.getInterval());
+        assertEquals(1, chore1.getId());
+        assertEquals(2, chore2.getId());
+        assertEquals(3, chore3.getId());
     }
 
     @Test

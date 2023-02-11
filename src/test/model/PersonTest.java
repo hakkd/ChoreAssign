@@ -66,6 +66,9 @@ public class PersonTest {
 
         person1.deleteChore(chore2);
         assertEquals(chore1.getTime() * 7 + chore3.getTime() / 4, person1.getTotalTimeWeekly());
+
+        person1.deleteChore(chore1);
+        assertEquals(chore3.getTime()/4, person1.getTotalTimeWeekly());
     }
 
     @Test

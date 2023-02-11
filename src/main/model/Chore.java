@@ -5,7 +5,7 @@ package model;
 
 public class Chore {
     // fields
-    private static int nextId = 0;
+    private static int nextId = 1;
     private int id;
     private String name; // name of chore
     private String description; // description of chore
@@ -15,7 +15,6 @@ public class Chore {
 
     // REQUIRES: name has length > 0, time is > 0
     // EFFECTS: constructs a chore
-    // TODO: add exception for requires
     public Chore(String name, String description, double time,  Interval interval) {
         this.id = nextId++;
         this.name = name;
