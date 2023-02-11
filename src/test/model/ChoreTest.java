@@ -37,6 +37,10 @@ class ChoreTest {
         chore1.assign(testPerson);
         assertTrue(chore1.getIsAssigned());
         assertEquals(chore1, testPerson.getChores().get(0));
+        // try to assign chore 1 again
+        chore1.assign(testPerson);
+        // check that person still has only one chore assigned
+        assertEquals(1, testPerson.getChores().size());
 
         chore2.assign(testPerson);
         assertTrue(chore2.getIsAssigned());
