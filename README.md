@@ -25,10 +25,10 @@ often discuss how to divide chores and how often they will be done.
 - As a user, I want to view the existing list of chores to be assigned
 - As a user, I want to be able to edit an existing chore in the list of chores to be assigned
 - As a user, I want to be able to delete a chore from the list of chores to be assigned
-- As a user, I want to be able to create a household member with a name and list of assigned chores
-- As a user, I want to view the existing list of household members
+- As a user, I want to be able to create a household member with a name and empty list of assigned chores
+- As a user, I want to view the existing household members
 - As a user, I want to be able to remove household members
-- As a user, I want to be able to assign chores to individual household members
+- As a user, I want to be able to assign multiple chores to individual household members
 - As a user, I want to be able to remove/edit chores assigned to household members
 - As a user, I want to be able to view the chores assigned to each household member
 - As a user, I want to be able to view all household members and the chores assigned to them
