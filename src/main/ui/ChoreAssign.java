@@ -82,17 +82,23 @@ public class ChoreAssign {
     // EFFECTS: creates a new chore using user inputs
     private void createChore() {
         Chore chore;
-        System.out.println("Enter chore name");
+        System.out.println("Enter chore name (name length must not be zero)");
         String name = input.next();
         System.out.println("Enter chore description");
         String desc = input.next();
         System.out.println("Enter chore frequency interval");
         Interval interval = processInterval();
-        System.out.println("Enter time required for chore on specified interval (hours)");
+        System.out.println("Enter time required for chore on specified interval (in hours, must be > 0)");
         double hours = input.nextDouble();
 
         chore = new Chore(name, desc, hours, interval);
         chores.add(chore);
+        System.out.println("Created new chore:");
+        System.out.println("ID = " + chore.getId());
+        System.out.println("Name = " + chore.getName());
+        System.out.println("Description = " + chore.getDescription());
+        System.out.println("Interval = " + chore.getInterval());
+        System.out.println("Time (h) = " + chore.getTime());
     }
 
     // EFFECTS: converts user string input to Interval enum
@@ -224,10 +230,10 @@ public class ChoreAssign {
                 person = getPerson(name);
             }
             // TODO: make this not crash
+            // code to avoid ConcurrentModificationException from
+            // https://www.baeldung.com/java-concurrentmodificationexception
             if (person != null) {
-                for (Chore c: person.getChores()) {
-                    c.unassign(person);
-                }
+                person.deleteAllChores();
                 people.remove(person);
                 System.out.println(name + " was deleted.");
             }
@@ -245,15 +251,15 @@ public class ChoreAssign {
             Person person = getPerson(name);
             if (person != null) {
                 viewChores(person.getChores());
-
-                System.out.println("Enter a chore ID to unassign it from " + person.getName());
-                int id = input.nextInt();
-
-                Chore chore = getChore(id, person);
-
-                if (chore != null && person != null) {
-                    chore.unassign(person);
-                    System.out.println(chore.getName() + " was unassigned");
+                if (!person.getChores().isEmpty()) {
+                    System.out.println("Enter a chore ID to unassign it from " + person.getName());
+                    int id = input.nextInt();
+                    Chore chore = getChore(id, person);
+                    if (chore != null && person != null) {
+                        chore.unassign();
+                        person.deleteChore(chore);
+                        System.out.println(chore.getName() + " was unassigned");
+                    }
                 }
             }
         }

@@ -57,13 +57,11 @@ class ChoreTest {
         assertTrue(chore2.getIsAssigned());
         assertEquals(chore2, testPerson.getChores().get(1));
 
-        chore1.unassign(testPerson);
+        chore1.unassign();
         assertFalse(chore1.getIsAssigned());
-        assertEquals(chore2, testPerson.getChores().get(0));
 
-        chore2.unassign(testPerson);
+        chore2.unassign();
         assertFalse(chore2.getIsAssigned());
-        assertTrue(testPerson.getChores().isEmpty());
     }
 
 }

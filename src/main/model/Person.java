@@ -32,7 +32,7 @@ public class Person {
         return result;
     }
 
-    // REQUIRES: chores contains chore with specified id
+    // REQUIRES: chores contains specified chore
     // MODIFIES: this
     // EFFECTS: remove chore from list of chores at specified index
     public void deleteChore(Chore chore) {
@@ -44,6 +44,16 @@ public class Person {
         }
         this.time -= t;
         this.chores.remove(chore);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes all chores from person
+    public void deleteAllChores() {
+        ArrayList<Chore> chores = this.getChores();
+        for (Chore c: chores) {
+            c.unassign();
+        }
+        this.chores.removeAll(chores);
     }
 
     // EFFECTS: returns sum of time required for all chores assigned to person for a week.
@@ -58,7 +68,7 @@ public class Person {
                 total += 7 * t;
             } else if (c.getInterval() == Interval.WEEKLY) {
                 total += t;
-            } else if (c.getInterval() == Interval.MONTHLY) {
+            } else {
                 total += t / 4;
             }
         }

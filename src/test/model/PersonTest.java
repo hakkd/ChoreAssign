@@ -53,6 +53,23 @@ public class PersonTest {
     }
 
     @Test
+    public void testDeleteChore() {
+        person1.assignChore(chore1);
+        assertEquals(1, person1.getChores().size());
+        person1.deleteChore(chore1);
+        assertEquals(0, person1.getChores().size());
+    }
+
+    @Test
+    public void testDeleteAllChores() {
+        person1.assignChore(chore1);
+        person1.assignChore(chore2);
+        assertEquals(2, person1.getChores().size());
+        person1.deleteAllChores();
+        assertEquals(0, person1.getChores().size());
+    }
+
+    @Test
     public void testGetTotalTimeWeekly() {
         person1.assignChore(chore1);
         assertEquals(chore1.getTime() * 7, person1.getTotalTimeWeekly());

@@ -34,9 +34,8 @@ public class Chore {
 
     // MODIFIES: this
     // EFFECTS: changes assignment status of chore to false (unassigned)
-    public void unassign(Person person) {
+    public void unassign() {
         this.isAssigned = false;
-        person.deleteChore(this);
     }
 
     public int getId() {
