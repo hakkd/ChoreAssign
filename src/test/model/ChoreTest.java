@@ -64,4 +64,33 @@ class ChoreTest {
         assertFalse(chore2.getIsAssigned());
     }
 
+    @Test
+    public void testSetName() {
+        chore1.setName("laundry");
+        assertEquals("laundry", chore1.getName());
+    }
+
+    @Test
+    public void testSetDescription() {
+        chore1.setDescription("wash laundry");
+        assertEquals("wash laundry", chore1.getDescription());
+
+        chore1.setDescription("");
+        assertEquals("", chore1.getDescription());
+    }
+
+    @Test
+    public void testSetTime() {
+        chore1.setTime(12.1);
+        assertEquals(12.1, chore1.getTime());
+
+        chore1.setTime(3);
+        assertEquals(3, chore1.getTime());
+    }
+
+    @Test
+    public void testSetInterval () {
+        chore1.setInterval(Interval.MONTHLY);
+        assertEquals(Interval.MONTHLY, chore1.getInterval());
+    }
 }

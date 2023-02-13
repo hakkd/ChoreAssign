@@ -38,6 +38,32 @@ public class Chore {
         this.isAssigned = false;
     }
 
+    // REQUIRES: given name is not empty
+    // MODIFIES: this
+    // EFFECTS: changes the chore name field
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes the chore description field
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    // REQUIRES: given time is not zero
+    // MODIFIES: this
+    // EFFECTS: changes the chore time field
+    public void setTime(double time) {
+        this.time = time;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes the chore interval field
+    public void setInterval(Interval interval) {
+        this.interval = interval;
+    }
+
     public int getId() {
         return id;
     }
