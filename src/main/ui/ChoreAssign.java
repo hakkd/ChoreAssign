@@ -202,10 +202,18 @@ public class ChoreAssign {
         System.out.println(oldName + " was renamed to " + newName);
     }
 
-    // TODO
     // MODIFIES: this
     // EFFECTS: removes chore from list of chores
     private void deleteChore() {
+        System.out.println("Here are the chores:");
+        viewChores(chores);
+        if (!chores.isEmpty()) {
+            System.out.println("Enter the ID of the chore you want to delete");
+            int id = input.nextInt();
+            Chore chore = getChore(id);
+            System.out.println("Chore with ID " + chore.getId() + " was removed.");
+            chores.remove(chore);
+        }
     }
 
     // MODIFIES: this
@@ -410,7 +418,7 @@ public class ChoreAssign {
         }
     }
 
-    // EFFECTS: returns chore with given ID from person's chores or null if no chores are assigned
+    // EFFECTS: returns chore with given ID from chores or null if no chores are assigned
     private Chore getChore(int id) {
         Chore chore = null;
         for (Chore c : chores) {

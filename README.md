@@ -23,8 +23,8 @@ often discuss how to divide chores and how often they will be done.
 - As a user, I want to be able to create a new chore with a name, description, frequency (daily, weekly, or monthly), 
   and time commitment and add it to a list of chores
 - As a user, I want to view the existing list of chores
-- As a user, I want to be able to edit an existing chore in the list of chores to be assigned !!!TODO
-- As a user, I want to be able to delete a chore from the list of chores to be assigned !!!TODO
+- As a user, I want to be able to edit an existing chore in the list of chores to be assigned
+- As a user, I want to be able to delete a chore from the list of chores to be assigned
 - As a user, I want to be able to create a household member with a name and empty list of assigned chores
 - As a user, I want to view the existing household members
 - As a user, I want to be able to remove a household member
