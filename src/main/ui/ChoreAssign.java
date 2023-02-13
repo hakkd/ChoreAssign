@@ -212,6 +212,9 @@ public class ChoreAssign {
             int id = input.nextInt();
             Chore chore = getChore(id);
             System.out.println("Chore with ID " + chore.getId() + " was removed.");
+            for (Person p: people) {
+                p.deleteChore(chore);
+            }
             chores.remove(chore);
         }
     }
