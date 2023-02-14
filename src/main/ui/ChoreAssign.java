@@ -211,7 +211,7 @@ public class ChoreAssign {
             System.out.println("Enter the ID of the chore you want to delete");
             int id = input.nextInt();
             Chore chore = getChore(id);
-            System.out.println("Chore with ID " + chore.getId() + " was removed.");
+            System.out.println("Chore with ID " + chore.getId() + " was deleted.");
             for (Person p: people) {
                 p.deleteChore(chore);
             }
@@ -264,7 +264,7 @@ public class ChoreAssign {
         }
     }
 
-    // EFFECTS: prints chore id and name for each chore in user-created chores list
+    // EFFECTS: prints chore fields for each chore in user-created chores list
     private void viewChores(ArrayList<Chore> chores) {
         if (chores.isEmpty()) {
             System.out.println("There are no chores");
@@ -297,10 +297,8 @@ public class ChoreAssign {
                     }
                 }
             }
-
             String name = input.next();
             Person person = getPerson(name);
-
             if (chore != null && person != null) {
                 chore.assign(person);
                 System.out.println(chore.getName() + " was assigned to " + person.getName());
