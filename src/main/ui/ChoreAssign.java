@@ -175,9 +175,9 @@ public class ChoreAssign {
     private void editChoreTime(Chore chore) {
         System.out.println("Enter a new time");
         double oldTime = chore.getTime();
-        double newTime = input.nextDouble();
+        int newTime = input.nextInt();
         chore.setTime(newTime);
-        System.out.println("Time was changed from " + oldTime + " to " + newTime);
+        System.out.println("Time was changed from " + oldTime + " minutes to " + newTime + " minutes");
     }
 
     // REQUIRES: chore is not null
@@ -229,17 +229,17 @@ public class ChoreAssign {
         String desc = input.next();
         System.out.println("Enter chore frequency interval");
         Interval interval = processInterval();
-        System.out.println("Enter time required for chore on specified interval (in hours, must be > 0)");
-        double hours = input.nextDouble();
+        System.out.println("Enter time required for chore on specified interval (in minutes, must be > 0)");
+        int minutes = input.nextInt();
 
-        chore = new Chore(name, desc, hours, interval);
+        chore = new Chore(name, desc, minutes, interval);
         chores.add(chore);
         System.out.println("Created new chore:");
         System.out.println("ID = " + chore.getId());
         System.out.println("Name = " + chore.getName());
         System.out.println("Description = " + chore.getDescription());
         System.out.println("Interval = " + chore.getInterval());
-        System.out.println("Time (h) = " + chore.getTime());
+        System.out.println("Time (minutes) = " + chore.getTime());
     }
 
     // MODIFIES: this
@@ -269,10 +269,10 @@ public class ChoreAssign {
         if (chores.isEmpty()) {
             System.out.println("There are no chores");
         } else {
-            System.out.printf("%-4S %-15S %-25S %-9S %-9S %-10S %n", "id", "name", "description", "time (h)",
+            System.out.printf("%-4S %-15S %-25S %-9S %-9S %-10S %n", "id", "name", "description", "time (minutes)",
                     "interval", "assigned?");
             for (Chore c : chores) {
-                System.out.printf("%-4d %-15s %-25s %-9.2f %-9s %-10s %n", c.getId(), c.getName(), c.getDescription(),
+                System.out.printf("%-4d %-15s %-25s %-14d %-9s %-10s %n", c.getId(), c.getName(), c.getDescription(),
                         c.getTime(), c.getInterval(), c.getIsAssigned());
             }
         }
@@ -291,7 +291,7 @@ public class ChoreAssign {
                 if (c.getId() == id) {
                     if (!c.getIsAssigned()) {
                         chore = c;
-                        System.out.println("Enter the name of the person to assign the chore to");
+                        System.out.println("Enter the name of the person to assign the chore to: " + getPeopleNames());
                     } else {
                         System.out.println("That chore has already been assigned.");
                     }
@@ -414,7 +414,8 @@ public class ChoreAssign {
             System.out.println("There are no people");
         } else {
             for (Person p: people) {
-                System.out.println(p.getName() + " has " + p.getTotalTimeWeekly() + " hours of chores per week");
+                System.out.println(p.getName() + " has " + p.getTotalTimeWeekly() + " minutes of chores per week");
+                System.out.println("\t" + p.getName() + " is assigned to " + getChoreNames(p.getChores()));
             }
         }
     }
@@ -452,5 +453,23 @@ public class ChoreAssign {
             System.out.println("There is no person with that name");
         }
         return person;
+    }
+
+    // EFFECTS: returns list of names of people
+    private ArrayList<String> getPeopleNames() {
+        ArrayList<String> names = new ArrayList();
+        for (Person p: people) {
+            names.add(p.getName());
+        }
+        return names;
+    }
+
+    // EFFECTS: returns list of names of chores
+    private ArrayList<String> getChoreNames(ArrayList<Chore> chores) {
+        ArrayList<String> names = new ArrayList();
+        for (Chore c : chores) {
+            names.add(c.getName());
+        }
+        return names;
     }
 }

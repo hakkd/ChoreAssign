@@ -9,13 +9,13 @@ public class Chore {
     private int id;
     private String name; // name of chore
     private String description; // description of chore
-    private double time; // time taken to complete in hours
+    private int time; // time taken to complete in minutes
     private Interval interval;
     private boolean isAssigned; // True if has been assigned, else false
 
     // REQUIRES: name has length > 0, time is > 0
     // EFFECTS: constructs a chore
-    public Chore(String name, String description, double time,  Interval interval) {
+    public Chore(String name, String description, int time, Interval interval) {
         this.id = nextId++;
         this.name = name;
         this.description = description;
@@ -54,7 +54,7 @@ public class Chore {
     // REQUIRES: given time is not zero
     // MODIFIES: this
     // EFFECTS: changes the chore time field
-    public void setTime(double time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
@@ -76,7 +76,7 @@ public class Chore {
         return description;
     }
 
-    public double getTime() {
+    public int getTime() {
         return time;
     }
 

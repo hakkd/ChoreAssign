@@ -18,10 +18,10 @@ public class PersonTest {
         person1 = new Person("Joey");
         person2 = new Person("Chandler");
 
-        chore1 = new Chore("Dishes", "wash dishes", 0.5, Interval.DAILY);
-        chore2 = new Chore("Laundry", "wash laundry", 1, Interval.WEEKLY);
+        chore1 = new Chore("Dishes", "wash dishes", 30, Interval.DAILY);
+        chore2 = new Chore("Laundry", "wash laundry", 60, Interval.WEEKLY);
         chore3 = new Chore("Clean Fridge", "wipe down fridge and throw out old food",
-                1, Interval.MONTHLY);
+                60, Interval.MONTHLY);
     }
 
     @Test
