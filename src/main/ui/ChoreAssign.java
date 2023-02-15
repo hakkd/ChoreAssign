@@ -373,8 +373,6 @@ public class ChoreAssign {
             if (response.equals("y")) {
                 person = getPerson(name);
             }
-            // code to avoid ConcurrentModificationException from
-            // https://www.baeldung.com/java-concurrentmodificationexception
             if (person != null) {
                 person.deleteAllChores();
                 people.remove(person);

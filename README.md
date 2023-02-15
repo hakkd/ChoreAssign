@@ -30,6 +30,6 @@ often discuss how to divide chores and how often they will be done.
 - As a user, I want to be able to remove a household member
 - As a user, I want to be able to assign multiple chores to individual household members
 - As a user, I want to be able to remove chores assigned to household members
-- As a user, I want to be able to view the chores assigned to each household member !!!TODO
+- As a user, I want to be able to view the chores assigned to each household member
 - As a user, I want to be able to view all household members and the chores assigned to them
 - As a user, I want to be able to view the total time required for chores assigned to a household member
