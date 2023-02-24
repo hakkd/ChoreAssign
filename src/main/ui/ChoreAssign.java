@@ -3,17 +3,22 @@ package ui;
 import model.Chore;
 import model.Person;
 import model.Interval;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ChoreAssign {
+public class ChoreAssign implements Writable {
+    private String name;
     private ArrayList<Person> people;
     private static ArrayList<Chore> chores;
     private Scanner input;
 
     // EFFECTS: runs the ChoreAssign application
-    public ChoreAssign() {
+    public ChoreAssign(String name) {
+        this.name = name;
         runChoreAssign();
     }
 
@@ -469,5 +474,35 @@ public class ChoreAssign {
             names.add(c.getName());
         }
         return names;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("people", peopleToJson());
+        json.put("chores", choresToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray peopleToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Person p : people) {
+            jsonArray.put(p.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    private JSONArray choresToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Chore c: chores) {
+            jsonArray.put(c.toJson());
+        }
+
+        return jsonArray;
     }
 }

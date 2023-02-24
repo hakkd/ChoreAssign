@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 /** The Person class represents a person in a household **/
 
-public class Person {
+public class Person implements Writable {
     // fields
     private String name; // name
     private ArrayList<Chore> chores; // list of assigned chores
@@ -91,5 +94,13 @@ public class Person {
 
     public double getTime() {
         return time;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("chores", chores);
+        return json;
     }
 }

@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 /** The Chore class represents a household chore. A chore has a name, description, time required to complete
  *  and an interval. **/
 
-public class Chore {
+public class Chore implements Writable {
     // fields
     private static int nextId = 1;
     private int id;
@@ -86,5 +89,17 @@ public class Chore {
 
     public Boolean getIsAssigned() {
         return this.isAssigned;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("id", id);
+        json.put("name", name);
+        json.put("description", description);
+        json.put("time", time);
+        json.put("interval", interval);
+        json.put("isAssigned", isAssigned);
+        return json;
     }
 }
