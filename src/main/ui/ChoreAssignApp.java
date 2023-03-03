@@ -1,9 +1,6 @@
 package ui;
 
-import model.Chore;
-import model.ChoreAssign;
-import model.Person;
-import model.Interval;
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.JsonReader;
@@ -23,7 +20,7 @@ public class ChoreAssignApp implements Writable {
     private JsonReader jsonReader;
 
     // EFFECTS: runs the ChoreAssignApp application
-    public ChoreAssignApp() {
+    public ChoreAssignApp() throws FileNotFoundException {
         choreAssign = new ChoreAssign("My Chores");
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -79,7 +76,11 @@ public class ChoreAssignApp implements Writable {
         if (command.equals("c")) {
             editChores();
         } else if (command.equals("v")) {
-            viewChores(chores);
+            try {
+                viewChores();
+            } catch (NoChoresException e) {
+                System.out.println("There are no chores");
+            }
         } else if (command.equals("a")) {
             assignChore();
         } else if (command.equals("e")) {
@@ -140,7 +141,7 @@ public class ChoreAssignApp implements Writable {
     // EFFECTS: allows user to edit fields of chore
     private void editChore() {
         System.out.println("Here are the chores:");
-        viewChores(chores);
+        choreAssign.viewChores(chores);
         if (!chores.isEmpty()) {
             System.out.println("Enter the ID of a chore to edit");
             int id = input.nextInt();
@@ -282,9 +283,10 @@ public class ChoreAssignApp implements Writable {
     }
 
     // EFFECTS: prints chore fields for each chore in user-created chores list
-    private void viewChores(ArrayList<Chore> chores) {
+    private void viewChores() throws NoChoresException {
+        ArrayList<Chore> chores = choreAssign.getChores();
         if (chores.isEmpty()) {
-            System.out.println("There are no chores");
+            throw new NoChoresException();
         } else {
             System.out.printf("%-4S %-15S %-25S %-9S %-9S %-10S %n", "id", "name", "description", "time (minutes)",
                     "interval", "assigned?");
