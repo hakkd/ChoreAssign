@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import jdk.jshell.PersistentSnippet;
 import model.Chore;
 import model.Person;
 import model.Interval;
@@ -46,7 +45,7 @@ public class ChoreAssign implements Writable {
     //EFFECTS: adds person with given name to list of people
     public void addPerson(String name) throws DuplicatePersonException {
         for (Person p: people) {
-            if (p.getName() == name) {
+            if (p.getName().equals(name)) {
                 throw new DuplicatePersonException("A person already exists with that name");
             }
         }
