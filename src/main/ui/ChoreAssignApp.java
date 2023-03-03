@@ -1,6 +1,7 @@
 package ui;
 
 import model.Chore;
+import model.ChoreAssign;
 import model.Person;
 import model.Interval;
 import org.json.JSONArray;
@@ -8,27 +9,24 @@ import org.json.JSONObject;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import persistence.Writable;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//Represents the ChoreAssign app
+//Represents the ChoreAssignApp app
 //code for persistence implementation based on CPSC210 JsonSerializationDemo
-public class ChoreAssign implements Writable {
+public class ChoreAssignApp implements Writable {
     private static final String JSON_STORE = "./data/choreassign.json";
-    private String name;
-    private ArrayList<Person> people;
-    private static ArrayList<Chore> chores;
     private Scanner input;
+    private ChoreAssign choreAssign;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    // EFFECTS: runs the ChoreAssign application
-    public ChoreAssign(String name) {
-        this.name = name;
-        this.jsonWriter = new JsonWriter(JSON_STORE);
-        this.jsonReader = new JsonReader(JSON_STORE);
+    // EFFECTS: runs the ChoreAssignApp application
+    public ChoreAssignApp() {
+        choreAssign = new ChoreAssign("My Chores");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runChoreAssign();
     }
 
@@ -58,8 +56,6 @@ public class ChoreAssign implements Writable {
     // MODIFIES: this
     // EFFECTS: initializes lists
     private void init() {
-        people = new ArrayList<>();
-        chores = new ArrayList<>();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }

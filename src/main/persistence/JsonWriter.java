@@ -1,13 +1,13 @@
 package persistence;
 
 import org.json.JSONObject;
-import ui.ChoreAssign;
+import ui.ChoreAssignApp;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-//represents a writer that writes a JSON representation of ChoreAssign to a file
+//represents a writer that writes a JSON representation of ChoreAssignApp to a file
 // code for persistence implementation based on CPSC210 JsonSerializationDemo
 public class JsonWriter {
 
@@ -28,7 +28,7 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of workroom to file
-    public void write(ChoreAssign ca) {
+    public void write(ChoreAssignApp ca) {
         JSONObject json = ca.toJson();
         saveToFile(json.toString());
     }

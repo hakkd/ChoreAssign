@@ -1,14 +1,14 @@
 package persistence;
 
 import org.json.JSONObject;
-import ui.ChoreAssign;
+import ui.ChoreAssignApp;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-// Represents a reader that reads ChoreAssign from JSON data stored in file
+// Represents a reader that reads ChoreAssignApp from JSON data stored in file
 // code for persistence implementation based on CPSC210 JsonSerializationDemo
 public class JsonReader {
 
@@ -20,7 +20,7 @@ public class JsonReader {
     }
 
     //EFFECTS: reads application state from JSON file and returns it
-    public ChoreAssign read() throws IOException {
+    public ChoreAssignApp read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseChoreAssign(jsonObject);
@@ -37,13 +37,13 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    private ChoreAssign parseChoreAssign(JSONObject jsonObject) {
+    private ChoreAssignApp parseChoreAssign(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        ChoreAssign ca = new ChoreAssign(name);
+        ChoreAssignApp ca = new ChoreAssignApp(name);
         addData(ca, jsonObject);
         return ca;
     }
 
-    private void addData(ChoreAssign ca, JSONObject jsonObject) {
+    private void addData(ChoreAssignApp ca, JSONObject jsonObject) {
     }
 }
