@@ -103,4 +103,6 @@ public class PersonTest {
         person1.deleteChore(chore2);
         assertEquals(chore1.getTime() * 7 * 4 + chore3.getTime(), person1.getTotalTimeMonthly());
     }
+
+    //TODO: add JSON tests
 }

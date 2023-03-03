@@ -2,7 +2,6 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Nested;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -325,4 +324,6 @@ class ChoreAssignTest {
         }
         assertFalse(choreAssignTest.getPeople().isEmpty());
     }
+
+    //TODO: add JSON tests
 }
