@@ -4,6 +4,7 @@ import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -418,17 +419,6 @@ public class ChoreAssignApp {
         }
     }
 
-    // EFFECTS: returns chore with given ID from person's chores or null if no chores are assigned
-    private Chore getChorePerson(int id, Person p) {
-        Chore chore = null;
-        for (Chore c : p.getChores()) {
-            if (c.getId() == id) {
-                chore = c;
-            }
-        }
-        return chore;
-    }
-
     // EFFECTS: returns list of names of people
     private ArrayList<String> getPeopleNames() {
         ArrayList<String> names = new ArrayList();
@@ -447,6 +437,7 @@ public class ChoreAssignApp {
         return names;
     }
 
+    //EFFECTS: saves ChoreAssign to a file
     private void saveChoreAssign() {
         try {
             jsonWriter.open();
@@ -458,14 +449,13 @@ public class ChoreAssignApp {
         }
     }
 
+    //EFFECTS: loads ChoreAssign from a file
     private void loadChoreAssign() {
         try {
-            jsonWriter.open();
-            jsonWriter.write(choreAssign);
-            jsonWriter.close();
-            System.out.println("Saved " + choreAssign.getName() + " to " + JSON_STORE);
-        } catch (FileNotFoundException e) {
-            System.err.println("Unable to write to file: " + JSON_STORE);
+            choreAssign = jsonReader.read();
+            System.out.println("Loaded " + choreAssign.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }
