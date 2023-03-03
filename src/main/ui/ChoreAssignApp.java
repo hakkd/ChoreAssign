@@ -40,7 +40,13 @@ public class ChoreAssignApp {
             if (command.equals("q")) {
                 run = false;
             } else {
-                processCommand(command);
+                try {
+                    processCommand(command);
+                } catch (PersonException e) {
+                    System.err.println(e.getMessage());
+                } catch (ChoreException e) {
+                    System.err.println(e.getMessage());
+                }
             }
         }
 
@@ -69,25 +75,17 @@ public class ChoreAssignApp {
 
     // MODIFIES: this
     // EFFECTS: processes user command
-    private void processCommand(String command) {
+    private void processCommand(String command) throws ChoreException, PersonException {
         if (command.equals("c")) {
             editChores();
         } else if (command.equals("v")) {
-            try {
-                viewChores(choreAssign.getChores());
-            } catch (NoChoresException e) {
-                System.out.println("There are no chores");
-            }
+            viewChores(choreAssign.getChores());
         } else if (command.equals("a")) {
             assignChore();
         } else if (command.equals("e")) {
             editPeople();
         } else if (command.equals("p")) {
-            try {
-                viewPeople();
-            } catch (PersonException e) {
-                System.out.println(e.getMessage());
-            }
+            viewPeople();
         } else if (command.equals("s")) {
             saveChoreAssign();
         } else if (command.equals("l")) {
@@ -155,7 +153,7 @@ public class ChoreAssignApp {
             String command = input.next();
             processChoreEditCommand(command, chore);
         } catch (ChoreException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -230,7 +228,7 @@ public class ChoreAssignApp {
             choreAssign.deleteChore(id);
             System.out.println("Chore with ID " + id + " was deleted.");
         } catch (ChoreException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -308,9 +306,9 @@ public class ChoreAssignApp {
             choreAssign.assignChore(id, name);
             System.out.println(chore.getName() + " was assigned to " + person.getName());
         } catch (ChoreException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         } catch (PersonException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -380,7 +378,7 @@ public class ChoreAssignApp {
                 System.out.println(name + " was deleted.");
             }
         } catch (PersonException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -401,9 +399,9 @@ public class ChoreAssignApp {
             person.deleteChore(chore);
             System.out.println(chore.getName() + " was unassigned from " + person.getName());
         } catch (PersonException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         } catch (ChoreException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -420,18 +418,6 @@ public class ChoreAssignApp {
         }
     }
 
-    /**
-    // EFFECTS: returns chore with given ID from chores or null if no chores are assigned
-    private Chore getChore(int id) {
-        Chore chore = null;
-        for (Chore c : chores) {
-            if (c.getId() == id) {
-                chore = c;
-            }
-        }
-        return chore;
-    }**/
-
     // EFFECTS: returns chore with given ID from person's chores or null if no chores are assigned
     private Chore getChorePerson(int id, Person p) {
         Chore chore = null;
@@ -442,20 +428,6 @@ public class ChoreAssignApp {
         }
         return chore;
     }
-
-    /**
-    // EFFECTS: returns person with given name or null if person doesn't exist
-    private Person getPerson(String name) {
-        Person person = null;
-        for (Person p : people) {
-            if (p.getName().equals(name)) {
-                person = p;
-                break;
-            }
-            System.out.println("There is no person with that name");
-        }
-        return person;
-    }**/
 
     // EFFECTS: returns list of names of people
     private ArrayList<String> getPeopleNames() {
@@ -482,7 +454,7 @@ public class ChoreAssignApp {
             jsonWriter.close();
             System.out.println("Saved " + choreAssign.getName() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
+            System.err.println("Unable to write to file: " + JSON_STORE);
         }
     }
 
@@ -493,7 +465,7 @@ public class ChoreAssignApp {
             jsonWriter.close();
             System.out.println("Saved " + choreAssign.getName() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
+            System.err.println("Unable to write to file: " + JSON_STORE);
         }
     }
 }
