@@ -321,8 +321,7 @@ class ChoreAssignTest {
             assertFalse(choreAssignTest.getPeople().isEmpty());
             choreAssignTest.deletePerson("Hoey");
             fail("Did not throw PersonNotFoundException");
-        } catch (DuplicatePersonException e) {
-        } catch (PersonNotFoundException e){
+        } catch (PersonException e) {
         }
         assertFalse(choreAssignTest.getPeople().isEmpty());
     }
