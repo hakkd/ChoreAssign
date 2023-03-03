@@ -1,13 +1,13 @@
 package model;
 
 import java.util.ArrayList;
+
+import jdk.jshell.PersistentSnippet;
 import model.Chore;
 import model.Person;
 import model.Interval;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.JsonReader;
-import persistence.JsonWriter;
 import persistence.Writable;
 
 //represents ChoreAssignApp with list of chores and list of people
@@ -41,9 +41,15 @@ public class ChoreAssign implements Writable {
         chores.add(chore);
     }
 
+    //REQUIRES: person with given name doesn't already exist
     //MODIFIES: this
     //EFFECTS: adds person with given name to list of people
-    public void addPerson(String name) {
+    public void addPerson(String name) throws DuplicatePersonException {
+        for (Person p: people) {
+            if (p.getName() == name) {
+                throw new DuplicatePersonException("A person already exists with that name");
+            }
+        }
         Person person = new Person(name);
         people.add(person);
     }
@@ -78,9 +84,11 @@ public class ChoreAssign implements Writable {
         }
     }
 
+    //REQUIRES: chore is not already assigned, person with name exists
     //MODIFIES: this, Chore
     //EFFECTS: assigns given chore to person with given name. Throws exception if chore is already assigned
-    public void assignChore(int id, String name) throws ChoreAlreadyAssignedException, PersonNotFoundException {
+    public void assignChore(int id, String name) throws ChoreAlreadyAssignedException, PersonNotFoundException,
+            IdNotFoundException {
         Chore chore = null;
         for (Chore c : chores) {
             if (c.getId() == id) {
@@ -91,12 +99,14 @@ public class ChoreAssign implements Writable {
                 }
             }
         }
-        Person person = getPerson(name);
-        if (chore != null && person != null) {
-            chore.assign(person);
+        if (chore == null) {
+            throw new IdNotFoundException("Chore not found");
         }
+        Person person = getPerson(name);
+        chore.assign(person);
     }
 
+    //REQUIRES: chore with given ID exists
     //MODIFIES: this
     //EFFECTS: unassigns chore from people and deletes it from list of chores
     public void deleteChore(int id) throws IdNotFoundException {

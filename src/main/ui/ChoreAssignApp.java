@@ -359,8 +359,12 @@ public class ChoreAssignApp {
     private void createPerson() {
         System.out.println("Enter a name");
         String name = input.next();
-        choreAssign.addPerson(name);
-        System.out.println("Created new person named " + name);
+        try {
+            choreAssign.addPerson(name);
+            System.out.println("Created new person named " + name);
+        } catch (PersonException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     // MODIFIES: this
