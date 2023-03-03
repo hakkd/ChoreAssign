@@ -141,12 +141,13 @@ public class ChoreAssignApp implements Writable {
     // EFFECTS: allows user to edit fields of chore
     private void editChore() {
         System.out.println("Here are the chores:");
-        choreAssign.viewChores(chores);
-        if (!chores.isEmpty()) {
+        try {
+            viewChores();
+            ArrayList<Chore> chores = choreAssign.getChores();
             System.out.println("Enter the ID of a chore to edit");
             int id = input.nextInt();
-            Chore chore = getChore(id);
-            if (chore != null) {
+            try {
+                Chore chore = choreAssign.getChore(id);
                 System.out.println("Which field would you like to edit?");
                 System.out.println("\tn -> name");
                 System.out.println("\td -> description");
@@ -154,9 +155,11 @@ public class ChoreAssignApp implements Writable {
                 System.out.println("\tt -> time");
                 String command = input.next();
                 processChoreEditCommand(command, chore);
-            } else {
-                System.out.println("Invalid ID");
+            } catch (IdNotFoundException e) {
+                System.out.println("Chore with ID not found");
             }
+        } catch (NoChoresException e) {
+            System.out.println("No chores found");
         }
     }
 
@@ -224,16 +227,16 @@ public class ChoreAssignApp implements Writable {
     // EFFECTS: removes chore from list of chores
     private void deleteChore() {
         System.out.println("Here are the chores:");
-        viewChores(chores);
-        if (!chores.isEmpty()) {
+        try {
+            viewChores();
             System.out.println("Enter the ID of the chore you want to delete");
             int id = input.nextInt();
-            Chore chore = getChore(id);
-            System.out.println("Chore with ID " + chore.getId() + " was deleted.");
-            for (Person p: people) {
-                p.deleteChore(chore);
-            }
-            chores.remove(chore);
+            choreAssign.deleteChore(id);
+            System.out.println("Chore with ID " + id + " was deleted.");
+        } catch (NoChoresException e) {
+            System.out.println("No chores found");
+        } catch (IdNotFoundException e) {
+            System.out.println("Chore with ID not found");
         }
     }
 
@@ -251,7 +254,7 @@ public class ChoreAssignApp implements Writable {
         int minutes = input.nextInt();
 
         chore = new Chore(name, desc, minutes, interval);
-        chores.add(chore);
+        choreAssign.addChore(chore);
         System.out.println("Created new chore:");
         System.out.println("ID = " + chore.getId());
         System.out.println("Name = " + chore.getName());
@@ -437,6 +440,7 @@ public class ChoreAssignApp implements Writable {
         }
     }
 
+    /**
     // EFFECTS: returns chore with given ID from chores or null if no chores are assigned
     private Chore getChore(int id) {
         Chore chore = null;
@@ -446,7 +450,7 @@ public class ChoreAssignApp implements Writable {
             }
         }
         return chore;
-    }
+    }**/
 
     // EFFECTS: returns chore with given ID from person's chores or null if no chores are assigned
     private Chore getChorePerson(int id, Person p) {
@@ -490,16 +494,12 @@ public class ChoreAssignApp implements Writable {
         return names;
     }
 
-    private String getName() {
-        return name;
-    }
-
     private void saveChoreAssign() {
         try {
             jsonWriter.open();
             jsonWriter.write(this);
             jsonWriter.close();
-            System.out.println("Saved " + this.getName() + " to " + JSON_STORE);
+            System.out.println("Saved " + choreAssign.getName() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
@@ -510,7 +510,7 @@ public class ChoreAssignApp implements Writable {
             jsonWriter.open();
             jsonWriter.write(this);
             jsonWriter.close();
-            System.out.println("Saved " + this.getName() + " to " + JSON_STORE);
+            System.out.println("Saved " + choreAssign.getName() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }

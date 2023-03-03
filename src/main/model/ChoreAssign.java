@@ -23,12 +23,47 @@ public class ChoreAssign implements Writable {
         chores = new ArrayList<>();
     }
 
+    public String getName() {
+        return name;
+    }
+
     public ArrayList<Chore> getChores() {
         return chores;
     }
 
     public ArrayList<Person> getPeople() {
         return people;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds given chore to list of chores
+    public void addChore(Chore chore) {
+        chores.add(chore);
+    }
+
+    // EFFECTS: returns chore with given ID from chores or null if no chores are assigned
+    public Chore getChore(int id) throws IdNotFoundException {
+        Chore chore = null;
+        for (Chore c : chores) {
+            if (c.getId() == id) {
+                chore = c;
+            }
+        }
+        if (chore == null) {
+            throw new IdNotFoundException();
+        } else {
+            return chore;
+        }
+    }
+
+    //MODIFIES: this
+    //EFFECTS: unassigns chore from people and deletes it from list of chores
+    public void deleteChore(int id) throws IdNotFoundException {
+        Chore chore = getChore(id);
+        for (Person p: people) {
+            p.deleteChore(chore);
+        }
+        chores.remove(chore);
     }
 
     @Override
