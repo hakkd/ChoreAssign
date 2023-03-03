@@ -28,6 +28,7 @@ class ChoreAssignTest {
     public void testConstructorEmpty() {
         assertTrue(choreAssignTest.getChores().isEmpty());
         assertTrue(choreAssignTest.getPeople().isEmpty());
+        assertEquals("test", choreAssignTest.getName());
     }
 
     @Test
