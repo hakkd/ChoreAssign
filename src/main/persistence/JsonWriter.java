@@ -1,7 +1,7 @@
 package persistence;
 
+import model.ChoreAssign;
 import org.json.JSONObject;
-import ui.ChoreAssignApp;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,7 +28,7 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of workroom to file
-    public void write(ChoreAssignApp ca) {
+    public void write(ChoreAssign ca) {
         JSONObject json = ca.toJson();
         saveToFile(json.toString());
     }

@@ -41,7 +41,14 @@ public class ChoreAssign implements Writable {
         chores.add(chore);
     }
 
-    // EFFECTS: returns chore with given ID from chores or null if no chores are assigned
+    //MODIFIES: this
+    //EFFECTS: adds person with given name to list of people
+    public void addPerson(String name) {
+        Person person = new Person(name);
+        people.add(person);
+    }
+
+    // EFFECTS: returns chore with given ID from chores or throws exception if not found
     public Chore getChore(int id) throws IdNotFoundException {
         Chore chore = null;
         for (Chore c : chores) {
@@ -50,9 +57,43 @@ public class ChoreAssign implements Writable {
             }
         }
         if (chore == null) {
-            throw new IdNotFoundException();
+            throw new IdNotFoundException("Chore not found");
         } else {
             return chore;
+        }
+    }
+
+    //EFFECTS: returns person with given name or throws exception if not found
+    public Person getPerson(String name) throws PersonNotFoundException {
+        Person person = null;
+        for (Person p : people) {
+            if (p.getName().equals(name)) {
+                person = p;
+            }
+        }
+        if (person == null) {
+            throw new PersonNotFoundException("Person not found");
+        } else {
+            return person;
+        }
+    }
+
+    //MODIFIES: this, Chore
+    //EFFECTS: assigns given chore to person with given name. Throws exception if chore is already assigned
+    public void assignChore(int id, String name) throws ChoreAlreadyAssignedException, PersonNotFoundException {
+        Chore chore = null;
+        for (Chore c : chores) {
+            if (c.getId() == id) {
+                if (c.getIsAssigned()) {
+                    throw new ChoreAlreadyAssignedException("Chore is already assigned");
+                } else {
+                    chore = c;
+                }
+            }
+        }
+        Person person = getPerson(name);
+        if (chore != null && person != null) {
+            chore.assign(person);
         }
     }
 
@@ -64,6 +105,14 @@ public class ChoreAssign implements Writable {
             p.deleteChore(chore);
         }
         chores.remove(chore);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: removes person from list of people and unassigns their chores
+    public void deletePerson(String name) throws PersonNotFoundException {
+        Person person = getPerson(name);
+        person.deleteAllChores();
+        people.remove(person);
     }
 
     @Override

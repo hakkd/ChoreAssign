@@ -1,6 +1,8 @@
 package model;
 
-public class NoChoresException extends Exception {
+public class NoChoresException extends ChoreException {
 
-    public NoChoresException() {}
+    public NoChoresException(String s) {
+        super(s);
+    }
 }
