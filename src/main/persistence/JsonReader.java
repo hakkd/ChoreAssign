@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+// Represents a reader that reads ChoreAssign from JSON data stored in file
+// code for persistence implementation based on CPSC210 JsonSerializationDemo
 public class JsonReader {
 
     private String source;

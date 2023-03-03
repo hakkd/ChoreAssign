@@ -5,20 +5,30 @@ import model.Person;
 import model.Interval;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 import persistence.Writable;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Represents the ChoreAssign app
+//code for persistence implementation based on CPSC210 JsonSerializationDemo
 public class ChoreAssign implements Writable {
+    private static final String JSON_STORE = "./data/choreassign.json";
     private String name;
     private ArrayList<Person> people;
     private static ArrayList<Chore> chores;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the ChoreAssign application
     public ChoreAssign(String name) {
         this.name = name;
+        this.jsonWriter = new JsonWriter(JSON_STORE);
+        this.jsonReader = new JsonReader(JSON_STORE);
         runChoreAssign();
     }
 
@@ -42,7 +52,7 @@ public class ChoreAssign implements Writable {
             }
         }
 
-        System.out.println("\nGoodbye!");
+        System.out.println("\nGet to work!");
     }
 
     // MODIFIES: this
@@ -62,6 +72,8 @@ public class ChoreAssign implements Writable {
         System.out.println("\ta -> assign a chore");
         System.out.println("\te -> edit people");
         System.out.println("\tp -> view people");
+        System.out.println("\ts -> save chore assignments to file");
+        System.out.println("\tl -> load chore assignments from file");
         System.out.println("\tq -> quit");
     }
 
@@ -78,6 +90,10 @@ public class ChoreAssign implements Writable {
             editPeople();
         } else if (command.equals("p")) {
             viewPeople();
+        } else if (command.equals("s")) {
+            saveChoreAssign();
+        } else if (command.equals("l")) {
+            loadChoreAssign();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -474,6 +490,32 @@ public class ChoreAssign implements Writable {
             names.add(c.getName());
         }
         return names;
+    }
+
+    private String getName() {
+        return name;
+    }
+
+    private void saveChoreAssign() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(this);
+            jsonWriter.close();
+            System.out.println("Saved " + this.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    private void loadChoreAssign() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(this);
+            jsonWriter.close();
+            System.out.println("Saved " + this.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
     }
 
     @Override

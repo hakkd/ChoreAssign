@@ -33,5 +33,7 @@ often discuss how to divide chores and how often they will be done.
 - As a user, I want to be able to view the chores assigned to each household member
 - As a user, I want to be able to view all household members and the chores assigned to them
 - As a user, I want to be able to view the total time required for chores assigned to a household member
-- As a user, I want to be able to save created chores and household members lists to a file
-- As a user, I want to be able to load chores and assignments from a file
+- As a user, I want to be able to save created chores and household members lists to a file*
+- As a user, I want to be able to load chores and assignments from a file*
+
+\* code for persistence implementation based on CPSC210 JsonSerializationDemo

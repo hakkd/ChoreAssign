@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 //represents a writer that writes a JSON representation of ChoreAssign to a file
+// code for persistence implementation based on CPSC210 JsonSerializationDemo
 public class JsonWriter {
 
     private PrintWriter writer;

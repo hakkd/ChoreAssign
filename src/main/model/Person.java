@@ -5,8 +5,8 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 
-/** The Person class represents a person in a household **/
-
+// The Person class represents a person in a household
+// code for persistence implementation based on CPSC210 JsonSerializationDemo
 public class Person implements Writable {
     // fields
     private String name; // name
