@@ -1,0 +1,1 @@
+{"name":"My Chores","chores":[{"isAssigned":false,"name":"dishes","description":"wash dishes","interval":"DAILY","id":1,"time":15}],"people":[{"name":"Joey","chores":[]}]}

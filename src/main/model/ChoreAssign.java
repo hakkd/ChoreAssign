@@ -14,7 +14,7 @@ public class ChoreAssign implements Writable {
 
     private String name;
     private ArrayList<Person> people;
-    private static ArrayList<Chore> chores;
+    private ArrayList<Chore> chores;
 
     public ChoreAssign(String name) {
         this.name = name;

@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 // code for persistence implementation based on CPSC210 JsonSerializationDemo
 public class JsonWriter {
 
+    private static final int TAB = 4;
     private PrintWriter writer;
     private String destination;
 
@@ -30,7 +31,7 @@ public class JsonWriter {
     // EFFECTS: writes JSON representation of workroom to file
     public void write(ChoreAssign ca) {
         JSONObject json = ca.toJson();
-        saveToFile(json.toString());
+        saveToFile(json.toString(TAB));
     }
 
     // MODIFIES: this

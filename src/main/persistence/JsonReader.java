@@ -1,6 +1,7 @@
 package persistence;
 
-import model.ChoreAssign;
+import model.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 // Represents a reader that reads ChoreAssignApp from JSON data stored in file
@@ -39,15 +41,87 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    //TODO: fill in method clauses
+    //EFFECTS: parses ChoreAssign data from JSON and returns it
     private ChoreAssign parseChoreAssign(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         ChoreAssign ca = new ChoreAssign(name);
-        addData(ca, jsonObject);
+        addChores(ca, jsonObject);
+        addPeople(ca, jsonObject);
         return ca;
     }
 
-    //TODO
-    private void addData(ChoreAssign ca, JSONObject jsonObject) {
+    // EFFECTS: parses chores from JSON object and adds them to ChoreAssign object
+    private void addChores(ChoreAssign ca, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("chores");
+        for (Object json : jsonArray) {
+            JSONObject nextChore = (JSONObject) json;
+            addChore(ca, nextChore);
+        }
+    }
+
+    // MODIFIES: ca
+    // EFFECTS: parses chore from JSON object and adds it to ChoreAssign object. Only adds unassigned chores.
+    private void addChore(ChoreAssign ca, JSONObject jsonObject) {
+        int id = jsonObject.getInt(("id"));
+        String name = jsonObject.getString("name");
+        String description = jsonObject.getString("description");
+        int time = jsonObject.getInt("time");
+        Interval interval = Interval.valueOf(jsonObject.getString("interval"));
+        boolean isAssigned = jsonObject.getBoolean("isAssigned");
+        Chore chore = new Chore(name, description, time, interval);
+        chore.setId(id);
+        if (!isAssigned) {
+            ca.addChore(chore);
+        }
+    }
+
+    // EFFECTS: parses people from JSON object and adds them to ChoreAssign object
+    private void addPeople(ChoreAssign ca, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("people");
+        for (Object json : jsonArray) {
+            JSONObject nextPerson = (JSONObject) json;
+            addPerson(ca, nextPerson);
+        }
+    }
+
+    // MODIFIES: ca
+    // EFFECTS: parses person from JSON object and adds it to ChoreAssign object. Adds assigned chores to ChoreAssign.
+    private void addPerson(ChoreAssign ca, JSONObject jsonObject) {
+        String name = jsonObject.getString("name");
+        Person person = new Person(name);
+        try {
+            ca.addPerson(name);
+        } catch (DuplicatePersonException e) {
+            System.err.println(e.getMessage());
+        }
+
+        JSONArray jsonChores = jsonObject.getJSONArray("chores");
+        for (Object json : jsonChores) {
+            JSONObject nextChore = (JSONObject) json;
+            assignAddChore(ca, nextChore, person);
+        }
+    }
+
+    //MODIFIES person, chore
+    //EFFECTS: adds chore to person's list of chores
+    public void assignAddChore(ChoreAssign ca, JSONObject jsonObject, Person person) {
+        int id = jsonObject.getInt(("id"));
+        String name = jsonObject.getString("name");
+        String description = jsonObject.getString("description");
+        int time = jsonObject.getInt("time");
+        Interval interval = Interval.valueOf(jsonObject.getString("interval"));
+        boolean isAssigned = jsonObject.getBoolean("isAssigned");
+        assert isAssigned; // chore from person's list of chores should be assigned.
+        Chore chore = new Chore(name, description, time, interval);
+        chore.setId(id);
+        chore.unassign(); //set as unassigned in order to assign to person
+        ca.addChore(chore);
+        try {
+            ca.assignChore(chore.getId(), person.getName());
+        } catch (PersonException e) {
+            System.err.println(e.getMessage());
+        } catch (ChoreException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

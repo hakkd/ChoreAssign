@@ -236,7 +236,6 @@ public class ChoreAssignApp {
     // MODIFIES: this
     // EFFECTS: creates a new chore using user inputs
     private void createChore() {
-        Chore chore;
         System.out.println("Enter chore name (name must not be empty)");
         String name = input.next();
         System.out.println("Enter chore description");
@@ -246,7 +245,7 @@ public class ChoreAssignApp {
         System.out.println("Enter time required for chore on specified interval (in minutes, must be > 0)");
         int minutes = input.nextInt();
 
-        chore = new Chore(name, desc, minutes, interval);
+        Chore chore = new Chore(name, desc, minutes, interval);
         choreAssign.addChore(chore);
         System.out.println("Created new chore:");
         System.out.println("ID = " + chore.getId());

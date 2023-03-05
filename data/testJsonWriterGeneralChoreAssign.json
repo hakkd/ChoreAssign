@@ -1,0 +1,45 @@
+{
+    "name": "My chores",
+    "chores": [
+        {
+            "isAssigned": true,
+            "name": "dishes",
+            "description": "wash dishes",
+            "interval": "DAILY",
+            "id": 5,
+            "time": 15
+        },
+        {
+            "isAssigned": true,
+            "name": "laundry",
+            "description": "wash laundry",
+            "interval": "WEEKLY",
+            "id": 6,
+            "time": 60
+        }
+    ],
+    "people": [
+        {
+            "name": "Joey",
+            "chores": [{
+                "isAssigned": true,
+                "name": "dishes",
+                "description": "wash dishes",
+                "interval": "DAILY",
+                "time": 15,
+                "id": 5
+            }]
+        },
+        {
+            "name": "Chandler",
+            "chores": [{
+                "isAssigned": true,
+                "name": "laundry",
+                "description": "wash laundry",
+                "interval": "WEEKLY",
+                "time": 60,
+                "id": 6
+            }]
+        }
+    ]
+}
