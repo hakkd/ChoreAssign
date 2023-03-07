@@ -6,7 +6,7 @@
             "name": "dishes",
             "description": "wash dishes",
             "interval": "DAILY",
-            "id": 15,
+            "id": 1,
             "time": 15
         },
         {
@@ -14,7 +14,7 @@
             "name": "laundry",
             "description": "wash laundry",
             "interval": "WEEKLY",
-            "id": 16,
+            "id": 2,
             "time": 60
         },
         {
@@ -22,7 +22,7 @@
             "name": "vacuuming",
             "description": "vacuum",
             "interval": "MONTHLY",
-            "id": 17,
+            "id": 3,
             "time": 30
         }
     ],
@@ -35,7 +35,7 @@
                 "description": "wash dishes",
                 "interval": "DAILY",
                 "time": 15,
-                "id": 15
+                "id": 1
             }]
         },
         {
@@ -46,8 +46,12 @@
                 "description": "wash laundry",
                 "interval": "WEEKLY",
                 "time": 60,
-                "id": 16
+                "id": 2
             }]
+        },
+        {
+          "name": "Chandler",
+          "chores": []
         }
     ]
 }

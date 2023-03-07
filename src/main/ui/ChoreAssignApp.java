@@ -459,6 +459,8 @@ public class ChoreAssignApp {
             System.out.println("Loaded " + choreAssign.getName() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
     }
 }

@@ -35,6 +35,8 @@ public class JsonWriterTest extends JsonTest {
             assertEquals(0, ca.getPeople().size());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
+        } catch (Exception e) {
+            fail("Exception should not have been thrown");
         }
     }
 
@@ -45,6 +47,8 @@ public class JsonWriterTest extends JsonTest {
         ca.addChore(chore1);
         Chore chore2 = new Chore("laundry", "wash laundry", 60, Interval.WEEKLY);
         ca.addChore(chore2);
+        Chore chore3 = new Chore("vacuuming", "vacuum", 30, Interval.MONTHLY);
+        ca.addChore(chore3);
         try {
             ca.addPerson("Joey");
             ca.addPerson("Chandler");
@@ -60,13 +64,14 @@ public class JsonWriterTest extends JsonTest {
             assertEquals("My chores", ca.getName());
             ArrayList<Chore> chores = ca.getChores();
             ArrayList<Chore> chores1 = new ArrayList<>();
-            chores1.add(chores.get(0));
+            chores1.add(chores.get(1));
             ArrayList<Chore> chores2 = new ArrayList<>();
-            chores2.add(chores.get(1));
+            chores2.add(chores.get(2));
             ArrayList<Person> people = ca.getPeople();
-            assertEquals(2, chores.size());
-            checkChore("dishes", "wash dishes", Interval.DAILY, 15, chores.get(0));
-            checkChore("laundry", "wash laundry", Interval.WEEKLY, 60, chores.get(1));
+            assertEquals(3, chores.size());
+            checkChore("dishes", "wash dishes", Interval.DAILY, 15, chores.get(1));
+            checkChore("laundry", "wash laundry", Interval.WEEKLY, 60, chores.get(2));
+            checkChore("vacuuming", "vacuum", Interval.MONTHLY, 30, chores.get(0));
             checkPerson("Joey", chores1, people.get(0));
             checkPerson("Chandler", chores2, people.get(1));
         } catch (PersonException e) {
