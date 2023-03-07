@@ -1,11 +1,15 @@
 package model;
 
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-class NoPeopleExceptionTest extends PersonExceptionTest {
+class NoPeopleExceptionTest {
+
+    NoPeopleException exception;
 
     @Test
     void testGetMessage() {
-        super.testGetMessage();
+        exception = new NoPeopleException("test");
+        assertEquals("test", exception.getMessage());
     }
 }
