@@ -1,1 +1,82 @@
-{"name":"My Chores","chores":[{"isAssigned":false,"name":"dishes","description":"wash dishes","interval":"DAILY","id":1,"time":15}],"people":[{"name":"Joey","chores":[]}]}
+{
+    "name": "My Chores",
+    "chores": [
+        {
+            "isAssigned": true,
+            "name": "dishes",
+            "description": "wash dishes",
+            "interval": "DAILY",
+            "id": 1,
+            "time": 15
+        },
+        {
+            "isAssigned": true,
+            "name": "vacuuming",
+            "description": "vacuum floors and carpets",
+            "interval": "MONTHLY",
+            "id": 3,
+            "time": 30
+        },
+        {
+            "isAssigned": true,
+            "name": "laundry",
+            "description": "wash and fold laundry",
+            "interval": "WEEKLY",
+            "id": 2,
+            "time": 1
+        },
+        {
+            "isAssigned": true,
+            "name": "garbage",
+            "description": "take out garbage",
+            "interval": "WEEKLY",
+            "id": 4,
+            "time": 10
+        }
+    ],
+    "people": [
+        {
+            "name": "Ross",
+            "chores": [{
+                "isAssigned": true,
+                "name": "dishes",
+                "description": "wash dishes",
+                "interval": "DAILY",
+                "time": 15,
+                "id": 1
+            }]
+        },
+        {
+            "name": "Joey",
+            "chores": [
+                {
+                    "isAssigned": true,
+                    "name": "laundry",
+                    "description": "wash and fold laundry",
+                    "interval": "WEEKLY",
+                    "time": 1,
+                    "id": 2
+                },
+                {
+                    "isAssigned": true,
+                    "name": "vacuuming",
+                    "description": "vacuum floors and carpets",
+                    "interval": "MONTHLY",
+                    "time": 30,
+                    "id": 3
+                }
+            ]
+        },
+        {
+            "name": "Chandler",
+            "chores": [{
+                "isAssigned": true,
+                "name": "garbage",
+                "description": "take out garbage",
+                "interval": "WEEKLY",
+                "time": 10,
+                "id": 4
+            }]
+        }
+    ]
+}
