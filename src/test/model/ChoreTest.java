@@ -93,4 +93,6 @@ class ChoreTest {
         chore1.setInterval(Interval.MONTHLY);
         assertEquals(Interval.MONTHLY, chore1.getInterval());
     }
+
+    //TODO: add JSON tests
 }

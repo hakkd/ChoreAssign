@@ -1,19 +1,27 @@
 package ui;
 
-import model.Chore;
-import model.Person;
-import model.Interval;
-
+import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ChoreAssign {
-    private ArrayList<Person> people;
-    private static ArrayList<Chore> chores;
+//Represents the ChoreAssignApp app
+//code for persistence implementation based on CPSC210 JsonSerializationDemo
+public class ChoreAssignApp {
+    private static final String JSON_STORE = "./data/choreassign.json";
     private Scanner input;
+    private ChoreAssign choreAssign;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
-    // EFFECTS: runs the ChoreAssign application
-    public ChoreAssign() {
+    // EFFECTS: runs the ChoreAssignApp application
+    public ChoreAssignApp() throws FileNotFoundException {
+        choreAssign = new ChoreAssign("My Chores");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runChoreAssign();
     }
 
@@ -33,18 +41,22 @@ public class ChoreAssign {
             if (command.equals("q")) {
                 run = false;
             } else {
-                processCommand(command);
+                try {
+                    processCommand(command);
+                } catch (PersonException e) {
+                    System.err.println(e.getMessage());
+                } catch (ChoreException e) {
+                    System.err.println(e.getMessage());
+                }
             }
         }
 
-        System.out.println("\nGoodbye!");
+        System.out.println("\nGet to work!");
     }
 
     // MODIFIES: this
     // EFFECTS: initializes lists
     private void init() {
-        people = new ArrayList<>();
-        chores = new ArrayList<>();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
@@ -57,22 +69,28 @@ public class ChoreAssign {
         System.out.println("\ta -> assign a chore");
         System.out.println("\te -> edit people");
         System.out.println("\tp -> view people");
+        System.out.println("\ts -> save chore assignments to file");
+        System.out.println("\tl -> load chore assignments from file");
         System.out.println("\tq -> quit");
     }
 
     // MODIFIES: this
     // EFFECTS: processes user command
-    private void processCommand(String command) {
+    private void processCommand(String command) throws ChoreException, PersonException {
         if (command.equals("c")) {
             editChores();
         } else if (command.equals("v")) {
-            viewChores(chores);
+            viewChores(choreAssign.getChores());
         } else if (command.equals("a")) {
             assignChore();
         } else if (command.equals("e")) {
             editPeople();
         } else if (command.equals("p")) {
             viewPeople();
+        } else if (command.equals("s")) {
+            saveChoreAssign();
+        } else if (command.equals("l")) {
+            loadChoreAssign();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -123,22 +141,20 @@ public class ChoreAssign {
     // EFFECTS: allows user to edit fields of chore
     private void editChore() {
         System.out.println("Here are the chores:");
-        viewChores(chores);
-        if (!chores.isEmpty()) {
+        try {
+            viewChores(choreAssign.getChores());
             System.out.println("Enter the ID of a chore to edit");
             int id = input.nextInt();
-            Chore chore = getChore(id);
-            if (chore != null) {
-                System.out.println("Which field would you like to edit?");
-                System.out.println("\tn -> name");
-                System.out.println("\td -> description");
-                System.out.println("\ti -> interval");
-                System.out.println("\tt -> time");
-                String command = input.next();
-                processChoreEditCommand(command, chore);
-            } else {
-                System.out.println("Invalid ID");
-            }
+            Chore chore = choreAssign.getChore(id);
+            System.out.println("Which field would you like to edit?");
+            System.out.println("\tn -> name");
+            System.out.println("\td -> description");
+            System.out.println("\ti -> interval");
+            System.out.println("\tt -> time");
+            String command = input.next();
+            processChoreEditCommand(command, chore);
+        } catch (ChoreException e) {
+            System.err.println(e.getMessage());
         }
     }
 
@@ -206,23 +222,20 @@ public class ChoreAssign {
     // EFFECTS: removes chore from list of chores
     private void deleteChore() {
         System.out.println("Here are the chores:");
-        viewChores(chores);
-        if (!chores.isEmpty()) {
+        try {
+            viewChores(choreAssign.getChores());
             System.out.println("Enter the ID of the chore you want to delete");
             int id = input.nextInt();
-            Chore chore = getChore(id);
-            System.out.println("Chore with ID " + chore.getId() + " was deleted.");
-            for (Person p: people) {
-                p.deleteChore(chore);
-            }
-            chores.remove(chore);
+            choreAssign.deleteChore(id);
+            System.out.println("Chore with ID " + id + " was deleted.");
+        } catch (ChoreException e) {
+            System.err.println(e.getMessage());
         }
     }
 
     // MODIFIES: this
     // EFFECTS: creates a new chore using user inputs
     private void createChore() {
-        Chore chore;
         System.out.println("Enter chore name (name must not be empty)");
         String name = input.next();
         System.out.println("Enter chore description");
@@ -232,8 +245,8 @@ public class ChoreAssign {
         System.out.println("Enter time required for chore on specified interval (in minutes, must be > 0)");
         int minutes = input.nextInt();
 
-        chore = new Chore(name, desc, minutes, interval);
-        chores.add(chore);
+        Chore chore = new Chore(name, desc, minutes, interval);
+        choreAssign.addChore(chore);
         System.out.println("Created new chore:");
         System.out.println("ID = " + chore.getId());
         System.out.println("Name = " + chore.getName());
@@ -265,9 +278,9 @@ public class ChoreAssign {
     }
 
     // EFFECTS: prints chore fields for each chore in user-created chores list
-    private void viewChores(ArrayList<Chore> chores) {
+    private void viewChores(ArrayList<Chore> chores) throws NoChoresException {
         if (chores.isEmpty()) {
-            System.out.println("There are no chores");
+            throw new NoChoresException("No chores found");
         } else {
             System.out.printf("%-4S %-15S %-25S %-9S %-9S %-10S %n", "id", "name", "description", "time (minutes)",
                     "interval", "assigned?");
@@ -282,27 +295,20 @@ public class ChoreAssign {
     // EFFECTS: allows user to add an unassigned chore to a person's list of chores
     private void assignChore() {
         System.out.println("Here are the available chores:");
-        viewChores(chores);
-        if (!chores.isEmpty()) {
+        try {
+            viewChores(choreAssign.getChores());
             System.out.println("Enter the ID number of the chore you want to assign");
             int id = input.nextInt();
-            Chore chore = null;
-            for (Chore c : chores) {
-                if (c.getId() == id) {
-                    if (!c.getIsAssigned()) {
-                        chore = c;
-                        System.out.println("Enter the name of the person to assign the chore to: " + getPeopleNames());
-                    } else {
-                        System.out.println("That chore has already been assigned.");
-                    }
-                }
-            }
+            Chore chore = choreAssign.getChore(id);
+            System.out.println("Enter the name of the person to assign the chore to: " + getPeopleNames());
             String name = input.next();
-            Person person = getPerson(name);
-            if (chore != null && person != null) {
-                chore.assign(person);
-                System.out.println(chore.getName() + " was assigned to " + person.getName());
-            }
+            Person person = choreAssign.getPerson(name);
+            choreAssign.assignChore(id, name);
+            System.out.println(chore.getName() + " was assigned to " + person.getName());
+        } catch (ChoreException e) {
+            System.err.println(e.getMessage());
+        } catch (PersonException e) {
+            System.err.println(e.getMessage());
         }
     }
 
@@ -352,32 +358,31 @@ public class ChoreAssign {
     private void createPerson() {
         System.out.println("Enter a name");
         String name = input.next();
-        Person person = new Person(name);
-        people.add(person);
-        System.out.println("Created new person named " + name);
+        try {
+            choreAssign.addPerson(name);
+            System.out.println("Created new person named " + name);
+        } catch (PersonException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: lets user delete person from list of people
     private void deletePerson() {
         System.out.println("Here are the people:");
-        viewPeople();
-        if (!people.isEmpty()) {
+        try {
+            viewPeople();
             System.out.println("Enter the name of the person to delete");
             String name = input.next();
             System.out.println(name + " will be deleted");
             System.out.println("Are you sure (y/n)");
             String response = input.next();
-
-            Person person = null;
             if (response.equals("y")) {
-                person = getPerson(name);
-            }
-            if (person != null) {
-                person.deleteAllChores();
-                people.remove(person);
+                choreAssign.deletePerson(name);
                 System.out.println(name + " was deleted.");
             }
+        } catch (PersonException e) {
+            System.err.println(e.getMessage());
         }
     }
 
@@ -385,31 +390,30 @@ public class ChoreAssign {
     // EFFECTS: lets user remove chores for specified person
     private void editAssignments() {
         System.out.println("Here are the people:");
-        viewPeople();
-        if (!people.isEmpty()) {
+        try {
+            viewPeople();
             System.out.println("Enter the name of a person to view chores");
             String name = input.next();
-            Person person = getPerson(name);
-            if (person != null) {
-                viewChores(person.getChores());
-                if (!person.getChores().isEmpty()) {
-                    System.out.println("Enter a chore ID to unassign it from " + person.getName());
-                    int id = input.nextInt();
-                    Chore chore = getChorePerson(id, person);
-                    if (chore != null && person != null) {
-                        chore.unassign();
-                        person.deleteChore(chore);
-                        System.out.println(chore.getName() + " was unassigned");
-                    }
-                }
-            }
+            Person person = choreAssign.getPerson(name);
+            viewChores(person.getChores());
+            System.out.println("Enter a chore ID to unassign it from " + person.getName());
+            int id = input.nextInt();
+            Chore chore = choreAssign.getChore(id);
+            chore.unassign();
+            person.deleteChore(chore);
+            System.out.println(chore.getName() + " was unassigned from " + person.getName());
+        } catch (PersonException e) {
+            System.err.println(e.getMessage());
+        } catch (ChoreException e) {
+            System.err.println(e.getMessage());
         }
     }
 
-    // EFFECTS: lets user view people
-    private void viewPeople() {
+    // EFFECTS: lets user view people or throws exception if list of people is empty
+    private void viewPeople() throws NoPeopleException {
+        ArrayList<Person> people = choreAssign.getPeople();
         if (people.isEmpty()) {
-            System.out.println("There are no people");
+            throw new NoPeopleException("No people found");
         } else {
             for (Person p: people) {
                 System.out.println(p.getName() + " has " + p.getTotalTimeWeekly() + " minutes of chores per week");
@@ -418,45 +422,10 @@ public class ChoreAssign {
         }
     }
 
-    // EFFECTS: returns chore with given ID from chores or null if no chores are assigned
-    private Chore getChore(int id) {
-        Chore chore = null;
-        for (Chore c : chores) {
-            if (c.getId() == id) {
-                chore = c;
-            }
-        }
-        return chore;
-    }
-
-    // EFFECTS: returns chore with given ID from person's chores or null if no chores are assigned
-    private Chore getChorePerson(int id, Person p) {
-        Chore chore = null;
-        for (Chore c : p.getChores()) {
-            if (c.getId() == id) {
-                chore = c;
-            }
-        }
-        return chore;
-    }
-
-    // EFFECTS: returns person with given name or null if person doesn't exist
-    private Person getPerson(String name) {
-        Person person = null;
-        for (Person p : people) {
-            if (p.getName().equals(name)) {
-                person = p;
-                break;
-            }
-            System.out.println("There is no person with that name");
-        }
-        return person;
-    }
-
     // EFFECTS: returns list of names of people
     private ArrayList<String> getPeopleNames() {
         ArrayList<String> names = new ArrayList();
-        for (Person p: people) {
+        for (Person p: choreAssign.getPeople()) {
             names.add(p.getName());
         }
         return names;
@@ -469,5 +438,29 @@ public class ChoreAssign {
             names.add(c.getName());
         }
         return names;
+    }
+
+    //EFFECTS: saves ChoreAssign to a file
+    private void saveChoreAssign() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(choreAssign);
+            jsonWriter.close();
+            System.out.println("Saved " + choreAssign.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.err.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    //EFFECTS: loads ChoreAssign from a file
+    private void loadChoreAssign() {
+        try {
+            choreAssign = jsonReader.read();
+            System.out.println("Loaded " + choreAssign.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 }
