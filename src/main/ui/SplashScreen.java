@@ -8,6 +8,7 @@ import java.awt.*;
 public class SplashScreen {
     private JFrame splashScreen;
     private final JLabel title = new JLabel("ChoreAssign");
+    private final JLabel author = new JLabel("Elmeri Hakkinen, 2023");
     private final JProgressBar progressBar = new JProgressBar();
     private final JLabel progressText = new JLabel();
     private final JLabel image = new JLabel(new ImageIcon("data/noun-mop-3446522.png")); // source: https://thenounproject.com/
@@ -18,6 +19,7 @@ public class SplashScreen {
         createFrame();
         addImage();
         addTitle();
+        addAuthor();
         addProgressText();
         addProgressBar();
         runningPBar();
@@ -49,6 +51,15 @@ public class SplashScreen {
         title.setBounds(WIDTH / 2 - 100,220,600,40);
         title.setForeground(Color.BLACK);
         splashScreen.add(title);
+    }
+
+    // MODIFIES: this, author
+    // EFFECTS: adds author to splashScreen
+    public void addAuthor() {
+        author.setFont(new Font("arial",Font.PLAIN,15));
+        author.setBounds(WIDTH - 170,HEIGHT - 40,200,40);
+        author.setForeground(Color.BLACK);
+        splashScreen.add(author);
     }
 
     // MODIFIES: this, progress

@@ -7,7 +7,6 @@ import javax.swing.table.DefaultTableModel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-
 import model.*;
 import model.exceptions.ChoreException;
 import model.exceptions.DuplicatePersonException;
@@ -97,6 +96,7 @@ public class ChoreAssignUI extends JFrame {
     // MODIFIES: this
     // EFFECTS: Initializes chore table
     public void initChoreTable() {
+        choresPane.setBorder(BorderFactory.createTitledBorder("Chores"));
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("Name");
@@ -112,6 +112,7 @@ public class ChoreAssignUI extends JFrame {
     // MODIFIES: this
     // EFFECTS: initializes PersonList
     public void initPersonList() {
+        personListPane.setBorder(BorderFactory.createTitledBorder("People"));
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Name");
         model.addColumn("Total Time (Weekly)");
@@ -123,6 +124,7 @@ public class ChoreAssignUI extends JFrame {
     // MODIFIES: this
     // EFFECTS: initializes personChores
     public void initPersonChores() {
+        personChoresPane.setBorder(BorderFactory.createTitledBorder("Person's Chores"));
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("Name");
