@@ -1,6 +1,10 @@
 package ui;
 
 import model.*;
+import model.exceptions.ChoreException;
+import model.exceptions.NoChoresException;
+import model.exceptions.NoPeopleException;
+import model.exceptions.PersonException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import java.io.FileNotFoundException;
@@ -8,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//Represents the ChoreAssignApp app
+//Represents the ChoreAssignApp console app
 //code for persistence implementation based on CPSC210 JsonSerializationDemo
 public class ChoreAssignApp {
     private static final String JSON_STORE = "./data/choreassign.json";
@@ -453,7 +457,7 @@ public class ChoreAssignApp {
     }
 
     //EFFECTS: loads ChoreAssign from a file
-    private void loadChoreAssign() {
+    public void loadChoreAssign() {
         try {
             choreAssign = jsonReader.read();
             System.out.println("Loaded " + choreAssign.getName() + " from " + JSON_STORE);

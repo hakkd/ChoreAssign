@@ -1,5 +1,6 @@
-package model;
+package model.exceptions;
 
+// Exception for chore
 public class ChoreException extends Exception {
     private String message;
 

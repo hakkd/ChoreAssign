@@ -1,5 +1,6 @@
-package model;
+package model.exceptions;
 
+// Exception for Person
 public class PersonException extends Exception {
     private String message;
 

@@ -37,3 +37,31 @@ often discuss how to divide chores and how often they will be done.
 - As a user, I want to be able to load chores and assignments from a file*
 
 \* code for persistence implementation based on CPSC210 JsonSerializationDemo
+
+## Instructions for grader
+
+### Add multiple X to Y:
+- To add a chore:
+  - Click the "Add Chore Button". This will open a pop-up window.
+  - Fill in the chore fields according to the pop-up window.
+  - Click "OK" to add the chore to the list of chores.
+- To add a person:
+  - Click the "Add Person" button at the bottom of the window.
+  - Enter a name in the pop-up window. The name must be unique from any existing names.
+  - Click "OK" to add the new person.
+- To edit a created chore:
+  - Click on a chore (row) in the top table containing the created chores to highlight it.
+  - Click on the "Edit Chore" button below. This will open a pop-up window.
+  - Change the chore fields as necessary, unchanged fields will remain unchanged.
+  - Click "OK" to apply the changes.
+- To assign a chore to a person:
+  - Click on a chore (row) in the top table containing the created chores to highlight it.
+  - Click on the "Assign Chore" button below. This will open a pop-up window.
+  - Select a person to assign the chore to in the drop-down.
+  - Click "OK" to apply changes.
+
+### Persistence:
+- To load the application state:
+  - Click the "Load" button in the top left corner of the window.
+- To save the application state:
+  - Click the "save" button in the top left corner of the window.

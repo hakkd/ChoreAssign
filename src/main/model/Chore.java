@@ -96,6 +96,7 @@ public class Chore implements Writable {
     }
 
     @Override
+    // EFFECTS: writes the Chore object to JSON
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("id", id);

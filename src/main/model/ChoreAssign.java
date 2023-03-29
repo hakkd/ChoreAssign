@@ -2,9 +2,10 @@ package model;
 
 import java.util.ArrayList;
 
-import model.Chore;
-import model.Person;
-import model.Interval;
+import model.exceptions.ChoreAlreadyAssignedException;
+import model.exceptions.DuplicatePersonException;
+import model.exceptions.IdNotFoundException;
+import model.exceptions.PersonNotFoundException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -125,6 +126,7 @@ public class ChoreAssign implements Writable {
     }
 
     @Override
+    // EFFECTS: writes this to JSON
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
@@ -133,7 +135,7 @@ public class ChoreAssign implements Writable {
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns people in this choreassign as a JSON array
     private JSONArray peopleToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -144,6 +146,7 @@ public class ChoreAssign implements Writable {
         return jsonArray;
     }
 
+    // EFFECTS: returns chores in this choreassign as a JSON array
     private JSONArray choresToJson() {
         JSONArray jsonArray = new JSONArray();
 

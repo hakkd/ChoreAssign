@@ -97,6 +97,7 @@ public class Person implements Writable {
     }
 
     @Override
+    // EFFECTS: converts this to JSONObject
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);

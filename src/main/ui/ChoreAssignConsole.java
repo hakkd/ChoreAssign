@@ -2,7 +2,7 @@ package ui;
 
 import java.io.FileNotFoundException;
 
-public class Main {
+public class ChoreAssignConsole {
 
     public static void main(String[] args) {
         try {

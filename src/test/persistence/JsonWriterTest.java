@@ -2,6 +2,8 @@ package persistence;
 
 import model.*;
 import model.ChoreAssign;
+import model.exceptions.ChoreException;
+import model.exceptions.PersonException;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;

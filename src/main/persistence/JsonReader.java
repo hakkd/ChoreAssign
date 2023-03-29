@@ -1,15 +1,15 @@
 package persistence;
 
 import model.*;
+import model.exceptions.ChoreException;
+import model.exceptions.PersonException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 // Represents a reader that reads ChoreAssignApp from JSON data stored in file

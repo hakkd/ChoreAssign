@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.PersonException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
