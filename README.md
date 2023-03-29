@@ -40,6 +40,9 @@ often discuss how to divide chores and how often they will be done.
 
 ## Instructions for grader
 
+### Visual component:
+- Run ChoreAssignUI to see the splashscreen.
+
 ### Add multiple X to Y:
 - To add a chore:
   - Click the "Add Chore Button". This will open a pop-up window.
