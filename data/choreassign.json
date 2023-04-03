@@ -2,31 +2,29 @@
     "name": "My Chores",
     "chores": [
         {
-            "isAssigned": true,
-            "name": "dishes",
+            "isAssigned": false,
+            "name": "Dishes",
             "description": "wash dishes",
-            "interval": "DAILY",
-            "id": 4,
-            "time": 18
+            "interval": "WEEKLY",
+            "id": 1,
+            "time": 20
         },
         {
             "isAssigned": false,
-            "name": "laundry",
-            "description": "",
+            "name": "Laundry",
+            "description": "wash laundry",
             "interval": "WEEKLY",
-            "id": 5,
+            "id": 2,
+            "time": 30
+        },
+        {
+            "isAssigned": false,
+            "name": "Vacuum",
+            "description": "clean house",
+            "interval": "MONTHLY",
+            "id": 3,
             "time": 60
         }
     ],
-    "people": [{
-        "name": "Joey",
-        "chores": [{
-            "isAssigned": true,
-            "name": "dishes",
-            "description": "wash dishes",
-            "interval": "DAILY",
-            "time": 18,
-            "id": 4
-        }]
-    }]
+    "people": []
 }

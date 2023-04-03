@@ -72,7 +72,7 @@ public class SplashScreen {
     }
 
     // MODIFIES: this, progressBar
-    // EFFECTS:
+    // EFFECTS: adds progress bar
     public void addProgressBar() {
         progressBar.setBounds(100,280,400,50);
         progressBar.setBorderPainted(true);
