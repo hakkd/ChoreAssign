@@ -4,6 +4,10 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -43,6 +47,15 @@ public class ChoreAssignUI extends JFrame {
         setTitle("ChoreAssign");
         setSize(1000, 600);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                EventLog el = EventLog.getInstance();
+                for (Event ev : el) {
+                    System.out.println(ev.toString());
+                }
+            }
+        });
         setVisible(true);
 
         ca = new ChoreAssign("My Chores");
@@ -365,7 +378,6 @@ public class ChoreAssignUI extends JFrame {
         updateChoreTable();
         updatePersonList();
         updatePersonChores();
-        printChores();
     }
 
     // MODIFIES: this
@@ -398,13 +410,6 @@ public class ChoreAssignUI extends JFrame {
             System.err.println("Unable to write to file: " + JSON_STORE);
             JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
                     JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    // EFFECTS: prints all chores to console
-    private void printChores() {
-        for (Chore c : ca.getChores()) {
-            System.out.println("ID: " + c.getId() + ", Name: " + c.getName());
         }
     }
 

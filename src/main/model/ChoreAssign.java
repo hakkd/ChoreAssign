@@ -39,6 +39,7 @@ public class ChoreAssign implements Writable {
     //EFFECTS: adds given chore to list of chores
     public void addChore(Chore chore) {
         chores.add(chore);
+        EventLog.getInstance().logEvent(new Event("Created chore named " + chore.getName()));
     }
 
     //REQUIRES: person with given name doesn't already exist
@@ -52,6 +53,7 @@ public class ChoreAssign implements Writable {
         }
         Person person = new Person(name);
         people.add(person);
+        EventLog.getInstance().logEvent(new Event("Created person named " + name));
     }
 
     // EFFECTS: returns chore with given ID from chores or throws exception if not found
@@ -104,6 +106,7 @@ public class ChoreAssign implements Writable {
         }
         Person person = getPerson(name);
         chore.assign(person);
+        EventLog.getInstance().logEvent(new Event("Assigned " + chore.getName() + " to " + name));
     }
 
     //REQUIRES: chore with given ID exists
@@ -115,6 +118,7 @@ public class ChoreAssign implements Writable {
             p.deleteChore(chore);
         }
         chores.remove(chore);
+        EventLog.getInstance().logEvent(new Event("Deleted chore " + chore.getName()));
     }
 
     //MODIFIES: this
@@ -123,6 +127,7 @@ public class ChoreAssign implements Writable {
         Person person = getPerson(name);
         person.deleteAllChores();
         people.remove(person);
+        EventLog.getInstance().logEvent(new Event("Deleted person named " + name));
     }
 
     @Override

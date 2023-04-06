@@ -39,19 +39,23 @@ public class Chore implements Writable {
     // EFFECTS: changes assignment status of chore to false (unassigned)
     public void unassign() {
         this.isAssigned = false;
+        EventLog.getInstance().logEvent(new Event("Assignment status of " + name + " changed to false"));
     }
 
     // REQUIRES: given name is not empty
     // MODIFIES: this
     // EFFECTS: changes the chore name field
     public void setName(String name) {
+        String oldName = this.name;
         this.name = name;
+        EventLog.getInstance().logEvent(new Event("Name of " + oldName + " changed to " + name));
     }
 
     // MODIFIES: this
     // EFFECTS: changes the chore description field
     public void setDescription(String description) {
         this.description = description;
+        EventLog.getInstance().logEvent(new Event("Description of " + name + " changed to " + description));
     }
 
     // REQUIRES: given time is not zero
@@ -59,12 +63,14 @@ public class Chore implements Writable {
     // EFFECTS: changes the chore time field
     public void setTime(int time) {
         this.time = time;
+        EventLog.getInstance().logEvent(new Event("Time required for " + name + " changed to " + time));
     }
 
     // MODIFIES: this
     // EFFECTS: changes the chore interval field
     public void setInterval(Interval interval) {
         this.interval = interval;
+        EventLog.getInstance().logEvent(new Event("Interval of " + name + " changed to " + interval));
     }
 
     public int getId() {
