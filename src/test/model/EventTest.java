@@ -9,6 +9,7 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
+ * Adapted from CPSC210 AlarmSystem
  * Unit tests for the Event class
  */
 public class EventTest {
@@ -35,4 +36,9 @@ public class EventTest {
 	public void testToString() {
 		assertEquals(d.toString() + "\n" + "Created new chore", e.toString());
 	}
+
+    @Test
+    public void testHashCode() {
+        assertEquals(e.hashCode(), 13 * d.hashCode() + e.getDescription().hashCode());
+    }
 }

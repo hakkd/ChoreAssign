@@ -69,6 +69,17 @@ often discuss how to divide chores and how often they will be done.
 - To save the application state:
   - Click the "save" button in the top left corner of the window.
 
+## Phase 4: Task 2
+### Representative EventLog output
+Sun Apr 09 23:04:35 PDT 2023
+Created chore named Dishes
+Sun Apr 09 23:04:53 PDT 2023
+Created chore named Laundry
+Sun Apr 09 23:04:57 PDT 2023
+Created person named Joey
+Sun Apr 09 23:05:04 PDT 2023
+Assigned Laundry to Joey
+
 ## Phase 4: Task 3
 ### Reflection
 If I were to refactor my app I would try to combine the console and GUI versions of the app, so that there is one main 
