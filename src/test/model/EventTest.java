@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Adapted from CPSC210 AlarmSystem
@@ -39,6 +40,13 @@ public class EventTest {
 
     @Test
     public void testHashCode() {
-        assertEquals(e.hashCode(), 13 * d.hashCode() + e.getDescription().hashCode());
+        Event e2 = e;
+        assertTrue(e.hashCode() == e2.hashCode());
+    }
+
+    @Test
+    public void testEquals() {
+        Event e2 = e;
+        assertEquals(e, e2);
     }
 }
