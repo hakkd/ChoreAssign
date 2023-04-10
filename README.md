@@ -68,3 +68,11 @@ often discuss how to divide chores and how often they will be done.
   - Click the "Load" button in the top left corner of the window.
 - To save the application state:
   - Click the "save" button in the top left corner of the window.
+
+## Phase 4: Task 3
+### Reflection
+If I were to refactor my app I would try to combine the console and GUI versions of the app, so that there is one main 
+UI class that runs the app. Currently, the user has to choose whether to run the console or GUI version. Doing this
+would probably involve refactoring the ChoreAssignApp class so that it can deal with user inputs from the console or 
+GUI. The advantage of this refactoring would be to reduce the points of control. That way if the model classes or the 
+behaviour of the app change, then the console and GUI UI classes don't need to be modified individually.
