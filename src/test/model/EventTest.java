@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Adapted from CPSC210 AlarmSystem
@@ -48,5 +47,7 @@ public class EventTest {
     public void testEquals() {
         Event e2 = e;
         assertEquals(e, e2);
+        assertFalse(e.equals(null));
+        assertFalse(e.equals(new Person("a")));
     }
 }
