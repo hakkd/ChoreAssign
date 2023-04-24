@@ -5,7 +5,6 @@ import persistence.Writable;
 
 // The Chore class represents a household chore. A chore has a name, description, time required to complete
 // and an interval.
-//code for persistence implementation based on CPSC210 JsonSerializationDemo
 public class Chore implements Writable {
     // fields
     private static int nextId = 1;

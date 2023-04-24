@@ -5,7 +5,6 @@ import java.util.Date;
 
 
 /**
- * code from CPSC210 AlarmSystem
  * Represents an event.
  */
 public class Event {

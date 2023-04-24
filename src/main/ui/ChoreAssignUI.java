@@ -19,7 +19,6 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 //Represents the ChoreAssignUI graphical user interface
-//code for persistence implementation based on CPSC210 JsonSerializationDemo
 public class ChoreAssignUI extends JFrame {
     private static final String JSON_STORE = "./data/choreassign.json";
     private JsonWriter jsonWriter;

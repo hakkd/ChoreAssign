@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 // Represents a reader that reads ChoreAssignApp from JSON data stored in file
-// code for persistence implementation based on CPSC210 JsonSerializationDemo
 public class JsonReader {
 
     private String source;

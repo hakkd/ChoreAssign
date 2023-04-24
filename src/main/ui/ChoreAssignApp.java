@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 //Represents the ChoreAssignApp console app
-//code for persistence implementation based on CPSC210 JsonSerializationDemo
 public class ChoreAssignApp {
     private static final String JSON_STORE = "./data/choreassign.json";
     private Scanner input;

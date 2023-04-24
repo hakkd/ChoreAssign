@@ -5,11 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * code from CPSC210 AlarmSystem
  * Represents a log of choreassign events.
- * We use the Singleton Design Pattern to ensure that there is only
- * one EventLog in the system and that the system has global access
- * to the single instance of the EventLog.
  */
 public class EventLog implements Iterable<Event> {
     /**
